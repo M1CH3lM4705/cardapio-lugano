@@ -6,14 +6,15 @@ namespace CardapioLugano.API.Endpoints;
 
 public static class ProductsExtensions
 {
-    public static void AddEndpointsProducts(this WebApplication app)
+    public static void MapEndpointsProducts(this WebApplication app)
     {
-        var groupBuilder = app.MapGroup("products").RequireAuthorization().WithTags("Products");
+        var groupBuilder = app.MapGroup("products").WithTags("Products");
 
-        groupBuilder.MapGet("", ([FromServices] DAL<Product> dal) =>
+        groupBuilder.MapGet("", async ([FromServices] DAL<Product> dal) =>
         {
-            var listaDeArtistas = dal.ListDocuments("products");
-            if (listaDeArtistas is null)
+            var listadocumentos = await dal.ListDocuments();
+
+            if (listadocumentos is null or { Total: 0 })
             {
                 return Results.NotFound();
             }

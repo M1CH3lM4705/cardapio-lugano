@@ -15,4 +15,10 @@
     <ProjectReference Include="..\CardapioLugano.Data\CardapioLugano.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Configurations\" />
+    <Folder Include="Requests\" />
+    <Folder Include="Responses\" />
+  </ItemGroup>
+
 </Project>

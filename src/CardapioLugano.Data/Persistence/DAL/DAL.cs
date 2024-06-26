@@ -14,11 +14,10 @@ public class DAL<T> where T : BaseModel
     {
         this.collectionId = collectionId;
         _databases = appwriteBase.Databases;
-        var result = appwriteBase.Databases.List().Result;
-        databaseId = result.Databases.First().Id;
+        databaseId = appwriteBase.Id;
     }
 
-    public async Task<DocumentList> ListDocuments(string collectionId)
+    public async Task<DocumentList> ListDocuments()
     {
         DocumentList result = await _databases.ListDocuments(
             databaseId: databaseId,
@@ -29,7 +28,7 @@ public class DAL<T> where T : BaseModel
         return result;
     }
 
-    public async Task<Document> CreateDocument(Dictionary<string, object> data)
+    public async Task<Document> CreateDocument(T data)
     {
         Document result = await _databases.CreateDocument(
             databaseId: databaseId,
@@ -41,7 +40,7 @@ public class DAL<T> where T : BaseModel
         return result;
     }
 
-    public async Task<Document> GetDocument(string id, List<string>? queries)
+    public async Task<Document> GetDocument(string id, List<string>? queries = null)
     {
         Document result = await _databases.GetDocument(
             databaseId: databaseId,
@@ -53,7 +52,7 @@ public class DAL<T> where T : BaseModel
         return result;
     }
 
-    public async Task<Document> UpdateDocument(string id, Dictionary<string, object> data)
+    public async Task<Document> UpdateDocument(string id, T data)
     {
         Document result = await _databases.UpdateDocument(
             databaseId: databaseId,

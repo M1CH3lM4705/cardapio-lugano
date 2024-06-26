@@ -1,28 +1,26 @@
-﻿using Newtonsoft.Json;
-using System.Reflection.Metadata;
-using System.Text.Json.Serialization;
+﻿using Appwrite.Models;
+using Newtonsoft.Json;
 
 namespace CardapioLugano.Modelos.Modelos;
 public class Product : BaseModel
 {
-    [JsonPropertyName("$id")]
-    public int ProductId { get; set; }
-    [JsonPropertyName("name")]
+
+    [JsonProperty("name")]
     public string? Name { get; set; }
-    [JsonPropertyName("description")]
+    [JsonProperty("description")]
     public string? Description { get; set; }
-    [JsonPropertyName("price")]
+    [JsonProperty("price")]
     public decimal Price { get; set; }
-    [JsonPropertyName("stockQuantity")]
+    [JsonProperty("stockQuantity")]
     public int StockQuantity { get; set; }
-    [JsonPropertyName("categoryId")]
+    [JsonProperty("categoryId")]
     public int CategoryId { get; set; }
-    [JsonPropertyName("createdDate")]
+    [JsonProperty("createdDate")]
     public DateTime CreatedDate { get; set; }
 
-    public override BaseModel ConvertTo(Document data)
+    public override Product ConvertTo<Product>(Document data)
     {
-        return JsonConvert.DeserializeObject<Product>(JsonConvert.SerializeObject(data));
+        return JsonConvert.DeserializeObject<Product>(JsonConvert.SerializeObject(data))!;
     }
 
     public override Dictionary<string, object?> ToMap()
@@ -36,5 +34,12 @@ public class Product : BaseModel
             {"category" , CategoryId},
             {"createdDate", CreatedDate},
         };
+    }
+
+    public static readonly string Products = "products";
+
+    public static implicit operator Product(Document data)
+    {
+        return new Product().ConvertTo<Product>(data);
     }
 }
