@@ -1,5 +1,6 @@
 ﻿using Appwrite;
 using Appwrite.Services;
+using CardapioLugano.Data.Persistence.Interfaces;
 
 namespace CardapioLugano.Data.Persistence;
 public class AppwriteBase : IAppwriteBase

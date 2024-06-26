@@ -11,6 +11,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Api", "Api", "{D04BCB18-AA0
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CardapioLugano.API", "CardapioLugano.API\CardapioLugano.API.csproj", "{402BEA3B-784D-4600-A22D-E6AD8EBD579E}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modelos", "Modelos", "{2C039584-D24A-41F8-9F72-A096600A1559}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CardapioLugano.Modelos", "CardapioLugano.Modelos\CardapioLugano.Modelos.csproj", "{18F9B652-55D4-49A7-B86E-517617D4F23C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,6 +29,10 @@ Global
 		{402BEA3B-784D-4600-A22D-E6AD8EBD579E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{402BEA3B-784D-4600-A22D-E6AD8EBD579E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{402BEA3B-784D-4600-A22D-E6AD8EBD579E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18F9B652-55D4-49A7-B86E-517617D4F23C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18F9B652-55D4-49A7-B86E-517617D4F23C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18F9B652-55D4-49A7-B86E-517617D4F23C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18F9B652-55D4-49A7-B86E-517617D4F23C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -32,6 +40,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{C1FDB89F-60B7-49B8-8929-27DAFFA9EBC4} = {03EF03BC-E422-4D45-8B75-136B23C18EC3}
 		{402BEA3B-784D-4600-A22D-E6AD8EBD579E} = {D04BCB18-AA06-4AD2-9CEE-8690AE29BC29}
+		{18F9B652-55D4-49A7-B86E-517617D4F23C} = {2C039584-D24A-41F8-9F72-A096600A1559}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D52CAA5D-A2F5-4C35-B8A6-5308E069A871}
