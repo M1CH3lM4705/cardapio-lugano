@@ -5,13 +5,17 @@ namespace CardapioLugano.Modelos.Modelos;
 public class Category : BaseModel
 {
     public static readonly string Categories = "categories";
+    public Category()
+    {
+        
+    }
+    public Category(string? name)
+    {
+        Name = name;
+    }
 
     [JsonProperty("name")]
     public string? Name { get; set; }
-    public override Category ConvertTo<Category>(Document data)
-    {
-        return JsonConvert.DeserializeObject<Category>(JsonConvert.SerializeObject(data.Data))!;
-    }
 
     public override Dictionary<string, object?> ToMap()
     {

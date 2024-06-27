@@ -17,12 +17,12 @@ public class DAL<T> where T : BaseModel
         databaseId = appwriteBase.Id;
     }
 
-    public async Task<DocumentList> ListDocuments()
+    public async Task<DocumentList> ListDocuments(List<string>? queries = null)
     {
         DocumentList result = await _databases.ListDocuments(
             databaseId: databaseId,
             collectionId: collectionId,
-            queries: new List<string>() // optional
+            queries: queries // optional
         );
 
         return result;

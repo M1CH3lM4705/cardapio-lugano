@@ -10,18 +10,13 @@ public class Product : BaseModel
     [JsonProperty("description")]
     public string? Description { get; set; }
     [JsonProperty("price")]
-    public decimal Price { get; set; }
+    public double Price { get; set; }
     [JsonProperty("stockQuantity")]
-    public int StockQuantity { get; set; }
+    public long StockQuantity { get; set; }
     [JsonProperty("categoryId")]
-    public int CategoryId { get; set; }
+    public string? CategoryId { get; set; }
     [JsonProperty("createdDate")]
     public DateTime CreatedDate { get; set; }
-
-    public override Product ConvertTo<Product>(Document data)
-    {
-        return JsonConvert.DeserializeObject<Product>(JsonConvert.SerializeObject(data))!;
-    }
 
     public override Dictionary<string, object?> ToMap()
     {
@@ -38,8 +33,33 @@ public class Product : BaseModel
 
     public static readonly string Products = "products";
 
+    public Product(string? name, string? description, double price, long stockQuantity, string categoryId)
+    {
+        Name = name;
+        Description = description;
+        Price = price;
+        StockQuantity = stockQuantity;
+        CategoryId = categoryId;
+        CreatedDate = DateTime.Now;
+    }
+
+    public Product()
+    {
+        
+    }
+
     public static implicit operator Product(Document data)
     {
         return new Product().ConvertTo<Product>(data);
+
+        //return new Product
+        //{
+        //    Id = data.Id,
+        //    Name = data.Data["name"].ToString(),
+        //    Description = data.Data["description"].ToString(),
+        //    Price = (double)data.Data["price"],
+        //    StockQuantity = (long)data.Data["stockQuantity"],
+        //    CategoryId = data.Data["categoryId"].ToString()
+        //};
     }
 }
