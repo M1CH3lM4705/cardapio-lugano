@@ -7,7 +7,7 @@ public class Category : BaseModel
     public static readonly string Categories = "categories";
     public Category()
     {
-        
+
     }
     public Category(string? name)
     {

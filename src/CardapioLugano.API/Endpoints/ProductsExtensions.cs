@@ -22,7 +22,7 @@ public static class ProductsExtensions
             {
                 return Results.NotFound();
             }
-            
+
             return Results.Ok(listadocumentos.DocumentListToResponseList());
         });
 
@@ -30,7 +30,7 @@ public static class ProductsExtensions
         {
             var document = await dal.GetDocument(id);
 
-            if(document is null)
+            if (document is null)
                 return Results.NotFound();
 
             ProductResponse product = (Product)document;
@@ -82,7 +82,7 @@ public static class ProductsExtensions
             catch (AppwriteException ex)
             {
 
-                return Results.Problem(detail:ex.Message, statusCode:ex.Code);
+                return Results.Problem(detail: ex.Message, statusCode: ex.Code);
             }
         });
 

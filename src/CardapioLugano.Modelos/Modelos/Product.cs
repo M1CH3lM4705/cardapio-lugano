@@ -45,21 +45,11 @@ public class Product : BaseModel
 
     public Product()
     {
-        
+
     }
 
     public static implicit operator Product(Document data)
     {
         return new Product().ConvertTo<Product>(data);
-
-        //return new Product
-        //{
-        //    Id = data.Id,
-        //    Name = data.Data["name"].ToString(),
-        //    Description = data.Data["description"].ToString(),
-        //    Price = (double)data.Data["price"],
-        //    StockQuantity = (long)data.Data["stockQuantity"],
-        //    CategoryId = data.Data["categoryId"].ToString()
-        //};
     }
 }

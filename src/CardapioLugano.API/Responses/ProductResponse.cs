@@ -9,3 +9,4 @@ public record ProductResponse(string? Id, string? Name, string? Description)
         return new ProductResponse(product.Id, product.Name, product.Description);
     }
 }
+

@@ -36,7 +36,7 @@ public class DAL<T> where T : BaseModel
             documentId: ID.Unique(),
             data: data
             );
-        
+
         return result;
     }
 
