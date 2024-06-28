@@ -13,10 +13,8 @@ public class Product : BaseModel
     public double Price { get; set; }
     [JsonProperty("stockQuantity")]
     public long StockQuantity { get; set; }
-    [JsonProperty("categoryId")]
-    public string? CategoryId { get; set; }
-    [JsonProperty("createdDate")]
-    public DateTime CreatedDate { get; set; }
+    [JsonProperty("categories")]
+    public Category? Category { get; set; }
 
     public override Dictionary<string, object?> ToMap()
     {
@@ -26,8 +24,7 @@ public class Product : BaseModel
             {"description" , Description},
             {"price", Price},
             {"stockQuantity", StockQuantity},
-            {"category" , CategoryId},
-            {"createdDate", CreatedDate},
+            {"categories", Category},
         };
     }
 
@@ -39,8 +36,7 @@ public class Product : BaseModel
         Description = description;
         Price = price;
         StockQuantity = stockQuantity;
-        CategoryId = categoryId;
-        CreatedDate = DateTime.Now;
+        Category = new Category { Id = categoryId };
     }
 
     public Product()

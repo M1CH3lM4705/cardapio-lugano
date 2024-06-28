@@ -1,8 +1,10 @@
 ﻿using Appwrite;
+using Appwrite.Enums;
 using Appwrite.Models;
 using Appwrite.Services;
 using CardapioLugano.Data.Persistence.Interfaces;
 using CardapioLugano.Modelos.Modelos;
+using System.Reflection;
 
 namespace CardapioLugano.Data.Persistence.Products;
 public class DAL<T> where T : BaseModel
@@ -30,11 +32,12 @@ public class DAL<T> where T : BaseModel
 
     public async Task<Document> CreateDocument(T data)
     {
+
         Document result = await _databases.CreateDocument(
             databaseId: databaseId,
             collectionId: collectionId,
             documentId: ID.Unique(),
-            data: data
+            data: data.ToMap()
             );
 
         return result;
@@ -58,7 +61,7 @@ public class DAL<T> where T : BaseModel
             databaseId: databaseId,
             collectionId: collectionId,
             documentId: id,
-            data: data
+            data: data.ToMap()
             );
 
         return result;
@@ -82,4 +85,5 @@ public class DAL<T> where T : BaseModel
             return false;
         }
     }
+
 }

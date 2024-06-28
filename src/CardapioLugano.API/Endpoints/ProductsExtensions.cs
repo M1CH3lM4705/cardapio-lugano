@@ -23,7 +23,7 @@ public static class ProductsExtensions
                 return Results.NotFound();
             }
 
-            return Results.Ok(listadocumentos.DocumentListToResponseList());
+            return Results.Ok(listadocumentos.DocumentListToProductResponseList());
         });
 
         groupBuilder.MapGet("{id}", async ([FromServices] DAL<Product> dal, string id) =>

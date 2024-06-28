@@ -1,6 +1,10 @@
-﻿using CardapioLugano.Data.Persistence.Products;
+﻿using Appwrite;
+using CardapioLugano.API.Extensions;
+using CardapioLugano.API.Requests;
+using CardapioLugano.Data.Persistence.Products;
 using CardapioLugano.Modelos.Modelos;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace CardapioLugano.API.Endpoints;
 
@@ -19,7 +23,7 @@ public static class CategoriesExtensions
                 return Results.NotFound();
             }
 
-            return Results.Ok(listaDocumento);
+            return Results.Ok(listaDocumento.DocumentListToCategoryResponseList());
         });
 
         groupBuilder.MapGet("/{id}", async ([FromServices] DAL<Category> dal, string id) =>
@@ -32,6 +36,54 @@ public static class CategoriesExtensions
             var category = new Category().ConvertTo<Category>(documento);
 
             return Results.Ok(category);
+        });
+
+        groupBuilder.MapPost("", async ([FromServices] DAL<Category> dal, CategoryRequest req) =>
+        {
+            var category = new Category(req.Name);
+
+            try
+            {
+                var result = await dal.CreateDocument(category);
+
+                return Results.Created();
+            }
+            catch (AppwriteException ex)
+            {
+
+                return Results.Problem(title: "Erro a cadastar categoria", detail: ex.Message, statusCode: (int)HttpStatusCode.InternalServerError);
+            }
+
+        });
+
+        groupBuilder.MapPut("", async ([FromServices]DAL<Category> dal, CategoryRequest req) =>
+        {
+            var category = new Category(req.Name);
+
+            try
+            {
+                var document = await dal.UpdateDocument(req.Id!, category);
+
+                Category res = (Category)document;
+
+                return Results.Ok(res);
+            }
+            catch (AppwriteException ex)
+            {
+                return Results.Problem(detail: ex.Message, statusCode: ex.Code);
+            }
+        });
+
+        groupBuilder.MapDelete("{id}", async ([FromServices] DAL<Category> dal, string id) =>
+        {
+            var existe = await dal.GetDocument(id);
+
+            if (existe.Id != id)
+                return Results.NotFound();
+
+            var result = await dal.DeleteDocument(id);
+
+            return Results.Ok(result);
         });
     }
 }
