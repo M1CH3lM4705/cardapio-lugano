@@ -16,16 +16,12 @@ public class Category : BaseModel
 
     [JsonProperty("name")]
     public string? Name { get; set; }
-    [JsonProperty("products")]
-    public List<Product?> Products { get; set; } = new();
 
     public override Dictionary<string, object?> ToMap()
     {
         return new Dictionary<string, object?>
         {
-            { "$id", Id },
-            { "name", Name },
-            {"products", Products },
+            { "name", Name }
         };
     }
 

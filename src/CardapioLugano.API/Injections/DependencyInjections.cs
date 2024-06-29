@@ -14,18 +14,27 @@ public static class DependencyInjections
 
         services.AddSingleton<IAppwriteBase, AppwriteBase>();
 
-        services.AddTransient(sp =>
+        services.AddTransient(typeof(IDal<>), typeof(DAL<>));
+
+        services.AddTransient<IDal<Product>>(sp =>
         {
             var appwriteService = sp.GetRequiredService<IAppwriteBase>();
 
             return new DAL<Product>(Product.Products, appwriteService);
         });
 
-        services.AddTransient(sp =>
+        services.AddTransient<IDal<Category>>(sp =>
         {
             var appwriteService = sp.GetRequiredService<IAppwriteBase>();
 
             return new DAL<Category>(Category.Categories, appwriteService);
+        });
+
+        services.AddTransient<IDal<Order>>(sp =>
+        {
+            var appwriteService = sp.GetRequiredService<IAppwriteBase>();
+
+            return new DAL<Order>(Order.Orders, appwriteService);
         });
     }
 }

@@ -2,10 +2,10 @@
 
 namespace CardapioLugano.API.Responses;
 
-public record CategoryResponse(string? Id, string? Name, List<Product?> Products)
+public record CategoryResponse(string? Id, string? Name)
 {
     public static implicit operator CategoryResponse(Category category)
     {
-        return new CategoryResponse(category.Id, category.Name, category.Products);
+        return new CategoryResponse(category.Id, category.Name);
     }
 }

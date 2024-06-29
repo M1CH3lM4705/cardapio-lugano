@@ -1,6 +1,7 @@
 ﻿using Appwrite;
 using CardapioLugano.API.Extensions;
 using CardapioLugano.API.Requests;
+using CardapioLugano.Data.Persistence.Interfaces;
 using CardapioLugano.Data.Persistence.Products;
 using CardapioLugano.Modelos.Modelos;
 using Microsoft.AspNetCore.Mvc;
@@ -14,7 +15,7 @@ public static class CategoriesExtensions
     {
         var groupBuilder = app.MapGroup("categories").WithTags("Categories");
 
-        groupBuilder.MapGet("", async ([FromServices] DAL<Category> dal) =>
+        groupBuilder.MapGet("", async ([FromServices] IDal<Category> dal) =>
         {
             var listaDocumento = await dal.ListDocuments();
 
@@ -26,7 +27,7 @@ public static class CategoriesExtensions
             return Results.Ok(listaDocumento.DocumentListToCategoryResponseList());
         });
 
-        groupBuilder.MapGet("/{id}", async ([FromServices] DAL<Category> dal, string id) =>
+        groupBuilder.MapGet("/{id}", async ([FromServices] IDal<Category> dal, string id) =>
         {
             var documento = await dal.GetDocument(id);
 
@@ -38,7 +39,7 @@ public static class CategoriesExtensions
             return Results.Ok(category);
         });
 
-        groupBuilder.MapPost("", async ([FromServices] DAL<Category> dal, CategoryRequest req) =>
+        groupBuilder.MapPost("", async ([FromServices] IDal<Category> dal, [FromBody]CategoryRequest req) =>
         {
             var category = new Category(req.Name);
 
@@ -56,7 +57,7 @@ public static class CategoriesExtensions
 
         });
 
-        groupBuilder.MapPut("", async ([FromServices]DAL<Category> dal, CategoryRequest req) =>
+        groupBuilder.MapPut("", async ([FromServices] IDal<Category> dal, [FromBody] CategoryRequest req) =>
         {
             var category = new Category(req.Name);
 
@@ -74,7 +75,7 @@ public static class CategoriesExtensions
             }
         });
 
-        groupBuilder.MapDelete("{id}", async ([FromServices] DAL<Category> dal, string id) =>
+        groupBuilder.MapDelete("{id}", async ([FromServices] IDal<Category> dal, string id) =>
         {
             var existe = await dal.GetDocument(id);
 
