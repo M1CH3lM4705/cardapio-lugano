@@ -3,7 +3,6 @@ using CardapioLugano.API.Extensions;
 using CardapioLugano.API.Requests;
 using CardapioLugano.API.Responses;
 using CardapioLugano.Data.Persistence.Interfaces;
-using CardapioLugano.Data.Persistence.Products;
 using CardapioLugano.Modelos.Modelos;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,7 +20,7 @@ public static class ProductsExtensions
 
             if (listadocumentos is null or { Total: 0 })
             {
-                return Results.NotFound();
+                return Results.NoContent();
             }
 
             return Results.Ok(listadocumentos.DocumentListToProductResponseList());

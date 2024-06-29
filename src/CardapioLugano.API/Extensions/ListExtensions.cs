@@ -27,4 +27,11 @@ public static class ListExtensions
 
         return orders.Select<Order, OrderResponse>(x => x).ToList();
     }
+
+    public static List<OrderItemResponse> DocumentListToOrderItemsResponseList(this DocumentList documentList)
+    {
+        var orderItem = documentList.Documents.Select<Document, OrderItem>(x => x).ToList();
+
+        return orderItem.Select<OrderItem, OrderItemResponse>(x => x).ToList();
+    }
 }

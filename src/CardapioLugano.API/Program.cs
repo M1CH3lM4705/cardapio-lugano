@@ -13,9 +13,7 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-app.MapEndpointsProducts();
-app.MapEndpointsCategories();
-app.MapEndpointsOrders();
+app.MapEndpointsApi();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

@@ -36,5 +36,12 @@ public static class DependencyInjections
 
             return new DAL<Order>(Order.Orders, appwriteService);
         });
+
+        services.AddTransient<IDal<OrderItem>>(sp =>
+        {
+            var appwriteService = sp.GetRequiredService<IAppwriteBase>();
+
+            return new DAL<OrderItem>(OrderItem.OrderItems, appwriteService);
+        });
     }
 }
