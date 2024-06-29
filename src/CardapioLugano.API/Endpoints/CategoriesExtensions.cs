@@ -74,16 +74,6 @@ public static class CategoriesExtensions
             }
         });
 
-        groupBuilder.MapDelete("{id}", async ([FromServices] IDal<Category> dal, string id) =>
-        {
-            var existe = await dal.GetDocument(id);
-
-            if (existe.Id != id)
-                return Results.NotFound();
-
-            var result = await dal.DeleteDocument(id);
-
-            return Results.Ok(result);
-        });
+        groupBuilder.MapDeleteEndpoint<Category>();
     }
 }

@@ -39,7 +39,7 @@ public static class OrdersExtensions
 
         groupBuilder.MapPost("", async ([FromServices]IDal<Order> dal, [FromBody] OrderRequest req) =>
         {
-            var order = new Order(req.CustomeId, req.TotalAmount, req.Status);
+            var order = new Order(req.CustomerId, req.TotalAmount, req.Status);
 
             try
             {
@@ -56,7 +56,7 @@ public static class OrdersExtensions
 
         groupBuilder.MapPut("", async ([FromServices] IDal<Order> dal, [FromBody] OrderRequest req) =>
         {
-            var order = new Order(req.CustomeId, req.TotalAmount, req.Status);
+            var order = new Order(req.CustomerId, req.TotalAmount, req.Status);
 
             try
             {
@@ -73,16 +73,6 @@ public static class OrdersExtensions
             }
         });
 
-        groupBuilder.MapDelete("", async ([FromServices]IDal<Order> dal, [FromBody] OrderRequest req) =>
-        {
-            var existe = await dal.GetDocument(req.OrderId!);
-
-            if (existe.Id! != req.OrderId)
-                return Results.NotFound();
-
-            var result = await dal.DeleteDocument(req.OrderId!);
-
-            return Results.Ok(result);
-        });
+        groupBuilder.MapDeleteEndpoint<Order>();
     }
 }

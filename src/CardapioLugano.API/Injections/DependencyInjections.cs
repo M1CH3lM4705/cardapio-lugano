@@ -43,5 +43,12 @@ public static class DependencyInjections
 
             return new DAL<OrderItem>(OrderItem.OrderItems, appwriteService);
         });
+
+        services.AddTransient<IDal<Cart>>(sp =>
+        {
+            var appwriteService = sp.GetRequiredService<IAppwriteBase>();
+
+            return new DAL<Cart>(Cart.Carts, appwriteService);
+        });
     }
 }
