@@ -1,13 +1,11 @@
 ﻿using Appwrite;
-using Appwrite.Enums;
 using Appwrite.Models;
 using Appwrite.Services;
 using CardapioLugano.Data.Persistence.Interfaces;
 using CardapioLugano.Modelos.Modelos;
-using System.Reflection;
 
 namespace CardapioLugano.Data.Persistence.Products;
-public class DAL<T> where T : BaseModel
+public class DAL<T> : IDal<T> where T : BaseModel
 {
     private readonly string collectionId;
     private readonly Databases _databases;

@@ -2,6 +2,7 @@
 using CardapioLugano.API.Extensions;
 using CardapioLugano.API.Requests;
 using CardapioLugano.API.Responses;
+using CardapioLugano.Data.Persistence.Interfaces;
 using CardapioLugano.Data.Persistence.Products;
 using CardapioLugano.Modelos.Modelos;
 using Microsoft.AspNetCore.Mvc;
@@ -14,7 +15,7 @@ public static class ProductsExtensions
     {
         var groupBuilder = app.MapGroup("products").WithTags("Products");
 
-        groupBuilder.MapGet("", async ([FromServices] DAL<Product> dal) =>
+        groupBuilder.MapGet("", async ([FromServices] IDal<Product> dal) =>
         {
             var listadocumentos = await dal.ListDocuments();
 
@@ -26,7 +27,7 @@ public static class ProductsExtensions
             return Results.Ok(listadocumentos.DocumentListToProductResponseList());
         });
 
-        groupBuilder.MapGet("{id}", async ([FromServices] DAL<Product> dal, string id) =>
+        groupBuilder.MapGet("{id}", async ([FromServices] IDal<Product> dal, string id) =>
         {
             var document = await dal.GetDocument(id);
 
@@ -38,7 +39,7 @@ public static class ProductsExtensions
             return Results.Ok(product);
         });
 
-        groupBuilder.MapPost("", async ([FromServices] DAL<Product> dal, ProductRequest req) =>
+        groupBuilder.MapPost("", async ([FromServices] IDal<Product> dal, ProductRequest req) =>
         {
             var product = new Product(
                     req.Name,
@@ -61,7 +62,7 @@ public static class ProductsExtensions
             return Results.Created();
         });
 
-        groupBuilder.MapPut("{id}", async ([FromServices] DAL<Product> dal, string id, ProductRequest req) =>
+        groupBuilder.MapPut("{id}", async ([FromServices] IDal<Product> dal, string id, ProductRequest req) =>
         {
             var product = new Product(
                     req.Name,
@@ -86,7 +87,7 @@ public static class ProductsExtensions
             }
         });
 
-        groupBuilder.MapDelete("{id}", async ([FromServices] DAL<Product> dal, string id) =>
+        groupBuilder.MapDelete("{id}", async ([FromServices] IDal<Product> dal, string id) =>
         {
             var existe = await dal.GetDocument(id);
 

@@ -13,6 +13,9 @@ public class Product : BaseModel
     public double Price { get; set; }
     [JsonProperty("stockQuantity")]
     public long StockQuantity { get; set; }
+    [JsonProperty("active")]
+    public bool Active { get; set; } = true;
+
     [JsonProperty("categories")]
     public Category? Category { get; set; }
 
@@ -24,6 +27,7 @@ public class Product : BaseModel
             {"description" , Description},
             {"price", Price},
             {"stockQuantity", StockQuantity},
+            {"active" , Active},
             {"categories", Category},
         };
     }
