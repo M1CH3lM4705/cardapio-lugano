@@ -2,6 +2,7 @@
 using CardapioLugano.API.Extensions;
 using CardapioLugano.API.Requests;
 using CardapioLugano.API.Responses;
+using CardapioLugano.API.Services.Interfaces;
 using CardapioLugano.Data.Persistence.Interfaces;
 using CardapioLugano.Modelos.Modelos;
 using Microsoft.AspNetCore.Mvc;
@@ -51,6 +52,13 @@ public static class CartsExtensions
 
                 return Results.Problem(type: ex.Type, title: ex.Message, statusCode: ex.Code);
             }
+        });
+
+        groupBuilder.MapPost("add-cart-item", async ([FromServices] ICartServices cartServices, CartItemRequest req) =>
+        {
+            var result = await cartServices.AddCartItem(req);
+
+            return Results.Ok(result);
         });
 
         groupBuilder.MapPut("{id}", async ([FromServices] IDal<Cart> dal, [FromBody] CartRequest req, string id) =>
