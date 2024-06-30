@@ -1,4 +1,6 @@
-﻿using CardapioLugano.Data.Configurations;
+﻿using CardapioLugano.API.Services;
+using CardapioLugano.API.Services.Interfaces;
+using CardapioLugano.Data.Configurations;
 using CardapioLugano.Data.Persistence;
 using CardapioLugano.Data.Persistence.Interfaces;
 using CardapioLugano.Data.Persistence.Products;
@@ -43,5 +45,21 @@ public static class DependencyInjections
 
             return new DAL<OrderItem>(OrderItem.OrderItems, appwriteService);
         });
+
+        services.AddTransient<IDal<Cart>>(sp =>
+        {
+            var appwriteService = sp.GetRequiredService<IAppwriteBase>();
+
+            return new DAL<Cart>(Cart.Carts, appwriteService);
+        });
+
+        services.AddTransient<IDal<CartItem>>(sp =>
+        {
+            var appwriteService = sp.GetRequiredService<IAppwriteBase>();
+
+            return new DAL<CartItem>(CartItem.CartItems, appwriteService);
+        });
+
+        services.AddTransient<ICartServices, CartServices>();
     }
 }

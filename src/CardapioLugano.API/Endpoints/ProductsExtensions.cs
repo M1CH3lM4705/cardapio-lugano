@@ -86,16 +86,6 @@ public static class ProductsExtensions
             }
         });
 
-        groupBuilder.MapDelete("{id}", async ([FromServices] IDal<Product> dal, string id) =>
-        {
-            var existe = await dal.GetDocument(id);
-
-            if (existe.Id != id)
-                return Results.NotFound();
-
-            var result = await dal.DeleteDocument(id);
-
-            return Results.Ok(result);
-        });
+        groupBuilder.MapDeleteEndpoint<Product>();
     }
 }

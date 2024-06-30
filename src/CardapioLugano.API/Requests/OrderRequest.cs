@@ -2,4 +2,4 @@
 
 namespace CardapioLugano.API.Requests;
 
-public record OrderRequest(string? OrderId, string? CustomeId, [Required] double TotalAmount, string? Status);
+public record OrderRequest(string? OrderId, string? CustomerId, [Required] double TotalAmount, string? Status);
