@@ -16,10 +16,16 @@ public class AppwriteBase : IAppwriteBase
             .SetKey(appwrite.Value.ApiKey!);
 
         Databases = new Databases(client);
+        Storage = new Storage(client);
 
         Id = appwrite.Value.DatabaseId!;
+        BucketId = appwrite.Value.StorageId!;
     }
     public Databases Databases {  get; }
 
-    public string Id {  get; }
+    public string? Id {  get; }
+
+    public Storage Storage { get; }
+
+    public string? BucketId { get; }
 }

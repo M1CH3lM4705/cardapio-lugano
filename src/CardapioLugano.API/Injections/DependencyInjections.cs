@@ -60,6 +60,13 @@ public static class DependencyInjections
             return new DAL<CartItem>(CartItem.CartItems, appwriteService);
         });
 
+        services.AddTransient<IDal<Image>>(sp =>
+        {
+            var appwriteService = sp.GetRequiredService<IAppwriteBase>();
+
+            return new DAL<Image>(Image.Images, appwriteService);
+        });
+
         services.AddTransient<ICartServices, CartServices>();
     }
 }

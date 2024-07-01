@@ -2,6 +2,7 @@
 using CardapioLugano.API.Extensions;
 using CardapioLugano.API.Requests;
 using CardapioLugano.API.Responses;
+using CardapioLugano.API.Utils;
 using CardapioLugano.Data.Persistence.Interfaces;
 using CardapioLugano.Modelos.Modelos;
 using Microsoft.AspNetCore.Mvc;
@@ -12,7 +13,7 @@ public static class ProductsExtensions
 {
     public static void MapEndpointsProducts(this WebApplication app)
     {
-        var groupBuilder = app.MapGroup("products").WithTags("Products");
+        var groupBuilder = app.MapGroup("products").WithTags("Products").DisableAntiforgery(); ;
 
         groupBuilder.MapGet("", async ([FromServices] IDal<Product> dal) =>
         {
@@ -84,6 +85,25 @@ public static class ProductsExtensions
 
                 return Results.Problem(detail: ex.Message, statusCode: ex.Code);
             }
+        });
+
+        groupBuilder.MapPost("{id}/upload", async (
+            [FromServices] IDal<Product> dal,
+            [FromServices] IDal<Image> imageDal,
+            string id, 
+            IFormFile file) =>
+        {
+            if (!file.ValidateFile())
+                return Results.BadRequest();
+
+
+            var result = await dal.UploadFile(file.GetByteFile(), file.ContentType);
+
+            var image = new Image(id, result.Id);
+
+            await imageDal.CreateDocument(image);
+
+            return Results.Ok();
         });
 
         groupBuilder.MapDeleteEndpoint<Product>();

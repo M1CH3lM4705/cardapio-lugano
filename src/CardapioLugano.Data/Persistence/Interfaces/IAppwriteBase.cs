@@ -4,5 +4,7 @@ namespace CardapioLugano.Data.Persistence.Interfaces;
 public interface IAppwriteBase
 {
     Databases Databases { get; }
-    string Id { get; }
+    Storage Storage { get; }
+    string? Id { get; }
+    string? BucketId { get; }
 }
