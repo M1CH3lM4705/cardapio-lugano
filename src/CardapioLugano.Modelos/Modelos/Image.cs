@@ -1,5 +1,6 @@
 ﻿using Appwrite.Models;
 using Newtonsoft.Json;
+using static System.Net.WebRequestMethods;
 
 namespace CardapioLugano.Modelos.Modelos;
 public class Image : BaseModel
@@ -10,10 +11,11 @@ public class Image : BaseModel
     {
         
     }
-    public Image(string? productId, string? fileId)
+    public Image(string? productId, Appwrite.Models.File file, string projectId)
     {
         ProductId = productId;
-        FileId = fileId;
+        FileId = file.Id;
+        UrlImage = $"https://cloud.appwrite.io/v1/storage/buckets/{file.BucketId}/files/{FileId}/view?project={projectId}&mode=admin";
     }
 
     [JsonProperty("productId")]
@@ -22,7 +24,8 @@ public class Image : BaseModel
     public string? FileId { get; set; }
     [JsonProperty("description")]
     public string? Description { get; set; }
-
+    [JsonProperty("urlImage")]
+    public string? UrlImage { get; set; }
     public override Dictionary<string, object?> ToMap()
     {
         return new Dictionary<string, object?>
@@ -30,6 +33,7 @@ public class Image : BaseModel
             { "productId", ProductId },
             { "fileId", FileId },
             { "description", Description },
+            { "url", UrlImage },
         };
     }
 

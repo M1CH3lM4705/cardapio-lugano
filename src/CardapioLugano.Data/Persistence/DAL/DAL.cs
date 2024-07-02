@@ -104,4 +104,9 @@ public class DAL<T> : IDal<T> where T : BaseModel
 
         return result;
     }
+
+    public async Task<byte[]> GetFileView(string id)
+    {
+        return await _storage.GetFileView(bucketId:storageId, id);   
+    }
 }

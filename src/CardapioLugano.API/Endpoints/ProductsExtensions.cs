@@ -2,10 +2,13 @@
 using CardapioLugano.API.Extensions;
 using CardapioLugano.API.Requests;
 using CardapioLugano.API.Responses;
+using CardapioLugano.API.Services.Interfaces;
 using CardapioLugano.API.Utils;
+using CardapioLugano.Data.Configurations;
 using CardapioLugano.Data.Persistence.Interfaces;
 using CardapioLugano.Modelos.Modelos;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 
 namespace CardapioLugano.API.Endpoints;
 
@@ -27,14 +30,12 @@ public static class ProductsExtensions
             return Results.Ok(listadocumentos.DocumentListToProductResponseList());
         });
 
-        groupBuilder.MapGet("{id}", async ([FromServices] IDal<Product> dal, string id) =>
+        groupBuilder.MapGet("{id}", async ([FromServices] IProductService service, string id) =>
         {
-            var document = await dal.GetDocument(id);
+            if(string.IsNullOrEmpty(id))
+                return Results.BadRequest();
 
-            if (document is null)
-                return Results.NotFound();
-
-            ProductResponse product = (Product)document;
+            ProductResponse product = await service.GetProductAsync(id);
 
             return Results.Ok(product);
         });
@@ -91,17 +92,23 @@ public static class ProductsExtensions
             [FromServices] IDal<Product> dal,
             [FromServices] IDal<Image> imageDal,
             string id, 
-            IFormFile file) =>
+            IFormFile file,
+            IOptions<AppwriteConfiguration> options) =>
         {
+            var projectId = options.Value.ProjectId;
             if (!file.ValidateFile())
                 return Results.BadRequest();
 
 
             var result = await dal.UploadFile(file.GetByteFile(), file.ContentType);
 
-            var image = new Image(id, result.Id);
+            var product = (Product)await dal.GetDocument(id);
 
-            await imageDal.CreateDocument(image);
+            var image = new Image(id, result, projectId!);
+
+            product.AddImage(image);
+
+            await dal.UpdateDocument(id, product);
 
             return Results.Ok();
         });

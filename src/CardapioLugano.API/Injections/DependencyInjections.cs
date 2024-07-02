@@ -68,5 +68,7 @@ public static class DependencyInjections
         });
 
         services.AddTransient<ICartServices, CartServices>();
+
+        services.AddTransient<IProductService, ProductService>();
     }
 }

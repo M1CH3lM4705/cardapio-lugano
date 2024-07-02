@@ -10,5 +10,5 @@ public interface IDal<T> where T : BaseModel
     Task<Document> UpdateDocument(string id, T data);
     Task<bool> DeleteDocument(string id);
     Task<Appwrite.Models.File> UploadFile(byte[] fileByte, string mimeType);
-
+    Task<byte[]> GetFileView(string id);
 }
