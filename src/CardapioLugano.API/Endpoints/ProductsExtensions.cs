@@ -89,26 +89,15 @@ public static class ProductsExtensions
         });
 
         groupBuilder.MapPost("{id}/upload", async (
-            [FromServices] IDal<Product> dal,
-            [FromServices] IDal<Image> imageDal,
+            [FromServices] IProductService service,
             string id, 
-            IFormFile file,
-            IOptions<AppwriteConfiguration> options) =>
+            IFormFile file
+            ) =>
         {
-            var projectId = options.Value.ProjectId;
-            if (!file.ValidateFile())
+            if (!file.ValidateFile() && string.IsNullOrEmpty(id))
                 return Results.BadRequest();
 
-
-            var result = await dal.UploadFile(file.GetByteFile(), file.ContentType);
-
-            var product = (Product)await dal.GetDocument(id);
-
-            var image = new Image(id, result, projectId!);
-
-            product.AddImage(image);
-
-            await dal.UpdateDocument(id, product);
+            await service.UploadProductImageAsync(id, file);
 
             return Results.Ok();
         });
