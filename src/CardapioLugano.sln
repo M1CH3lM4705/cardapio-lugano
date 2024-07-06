@@ -5,15 +5,15 @@ VisualStudioVersion = 17.9.34902.65
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infra", "Infra", "{03EF03BC-E422-4D45-8B75-136B23C18EC3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CardapioLugano.Data", "CardapioLugano.Data\CardapioLugano.Data.csproj", "{C1FDB89F-60B7-49B8-8929-27DAFFA9EBC4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CardapioLugano.Data", "CardapioLugano.Data\CardapioLugano.Data.csproj", "{C1FDB89F-60B7-49B8-8929-27DAFFA9EBC4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Api", "Api", "{D04BCB18-AA06-4AD2-9CEE-8690AE29BC29}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CardapioLugano.API", "CardapioLugano.API\CardapioLugano.API.csproj", "{402BEA3B-784D-4600-A22D-E6AD8EBD579E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CardapioLugano.API", "CardapioLugano.API\CardapioLugano.API.csproj", "{402BEA3B-784D-4600-A22D-E6AD8EBD579E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modelos", "Modelos", "{2C039584-D24A-41F8-9F72-A096600A1559}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CardapioLugano.Modelos", "CardapioLugano.Modelos\CardapioLugano.Modelos.csproj", "{18F9B652-55D4-49A7-B86E-517617D4F23C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CardapioLugano.Modelos", "CardapioLugano.Modelos\CardapioLugano.Modelos.csproj", "{18F9B652-55D4-49A7-B86E-517617D4F23C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
