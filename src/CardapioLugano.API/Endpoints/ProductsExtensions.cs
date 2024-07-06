@@ -2,6 +2,9 @@
 using CardapioLugano.API.Extensions;
 using CardapioLugano.API.Requests;
 using CardapioLugano.API.Responses;
+using CardapioLugano.API.Services.Interfaces;
+using CardapioLugano.API.Utils;
+using CardapioLugano.Data.Authentication;
 using CardapioLugano.Data.Persistence.Interfaces;
 using CardapioLugano.Modelos.Modelos;
 using Microsoft.AspNetCore.Mvc;
@@ -12,7 +15,9 @@ public static class ProductsExtensions
 {
     public static void MapEndpointsProducts(this WebApplication app)
     {
-        var groupBuilder = app.MapGroup("products").WithTags("Products");
+        var groupBuilder = app.MapGroup("products").WithTags("Products")
+            .DisableAntiforgery()
+            .RequireAuthorization();
 
         groupBuilder.MapGet("", async ([FromServices] IDal<Product> dal) =>
         {
@@ -24,19 +29,17 @@ public static class ProductsExtensions
             }
 
             return Results.Ok(listadocumentos.DocumentListToProductResponseList());
-        });
+        }).WithOrder(1);
 
-        groupBuilder.MapGet("{id}", async ([FromServices] IDal<Product> dal, string id) =>
+        groupBuilder.MapGet("{id}", async ([FromServices] IProductService service, string id) =>
         {
-            var document = await dal.GetDocument(id);
+            if(string.IsNullOrEmpty(id))
+                return Results.BadRequest();
 
-            if (document is null)
-                return Results.NotFound();
-
-            ProductResponse product = (Product)document;
+            ProductResponse product = await service.GetProductAsync(id);
 
             return Results.Ok(product);
-        });
+        }).WithOrder(2);
 
         groupBuilder.MapPost("", async ([FromServices] IDal<Product> dal, ProductRequest req) =>
         {
@@ -59,7 +62,7 @@ public static class ProductsExtensions
             }
 
             return Results.Created();
-        });
+        }).WithOrder(3);
 
         groupBuilder.MapPut("{id}", async ([FromServices] IDal<Product> dal, string id, ProductRequest req) =>
         {
@@ -84,7 +87,21 @@ public static class ProductsExtensions
 
                 return Results.Problem(detail: ex.Message, statusCode: ex.Code);
             }
-        });
+        }).WithOrder(4);
+
+        groupBuilder.MapPost("{id}/upload", async (
+            [FromServices] IProductService service,
+            string id, 
+            IFormFile file
+            ) =>
+        {
+            if (!file.ValidateFile() && string.IsNullOrEmpty(id))
+                return Results.BadRequest();
+
+            await service.UploadProductImageAsync(id, file);
+
+            return Results.Ok();
+        }).WithOrder(5);
 
         groupBuilder.MapDeleteEndpoint<Product>();
     }

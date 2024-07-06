@@ -18,6 +18,8 @@ public class Product : BaseModel
 
     [JsonProperty("categories")]
     public Category? Category { get; set; }
+    [JsonProperty("images")]
+    public List<Image?> Images { get; set; } = [];
 
     public override Dictionary<string, object?> ToMap()
     {
@@ -29,6 +31,7 @@ public class Product : BaseModel
             {"stockQuantity", StockQuantity},
             {"active" , Active},
             {"categories", Category},
+            { "images", Images },
         };
     }
 
@@ -52,4 +55,7 @@ public class Product : BaseModel
     {
         return new Product().ConvertTo<Product>(data);
     }
+
+    public void AddImage(Image image) =>
+        Images.Add(image);
 }

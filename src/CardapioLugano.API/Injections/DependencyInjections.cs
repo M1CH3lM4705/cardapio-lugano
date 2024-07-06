@@ -4,6 +4,7 @@ using CardapioLugano.Data.Configurations;
 using CardapioLugano.Data.Persistence;
 using CardapioLugano.Data.Persistence.Interfaces;
 using CardapioLugano.Data.Persistence.Products;
+using CardapioLugano.Data.Token;
 using CardapioLugano.Modelos.Modelos;
 
 namespace CardapioLugano.API.Injections;
@@ -14,7 +15,7 @@ public static class DependencyInjections
     {
         services.Configure<AppwriteConfiguration>(config.GetSection(nameof(AppwriteConfiguration)));
 
-        services.AddSingleton<IAppwriteBase, AppwriteBase>();
+        services.AddTransient<IAppwriteBase, AppwriteBase>();
 
         services.AddTransient(typeof(IDal<>), typeof(DAL<>));
 
@@ -60,6 +61,17 @@ public static class DependencyInjections
             return new DAL<CartItem>(CartItem.CartItems, appwriteService);
         });
 
+        services.AddTransient<IDal<Image>>(sp =>
+        {
+            var appwriteService = sp.GetRequiredService<IAppwriteBase>();
+
+            return new DAL<Image>(Image.Images, appwriteService);
+        });
+
         services.AddTransient<ICartServices, CartServices>();
+
+        services.AddTransient<IProductService, ProductService>();
+        
+        services.AddTransient<ITokenGenerator, TokenGenerator>();
     }
 }
