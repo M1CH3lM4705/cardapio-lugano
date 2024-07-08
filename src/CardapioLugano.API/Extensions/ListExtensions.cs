@@ -1,6 +1,6 @@
 ﻿using Appwrite.Models;
 using CardapioLugano.API.Responses;
-using CardapioLugano.Modelos.Modelos;
+using CardapioLugano.Modelos.Models;
 
 namespace CardapioLugano.API.Extensions;
 

@@ -2,7 +2,7 @@
 using Appwrite.Models;
 using Appwrite.Services;
 using CardapioLugano.Data.Persistence.Interfaces;
-using CardapioLugano.Modelos.Modelos;
+using CardapioLugano.Modelos.Models;
 
 namespace CardapioLugano.Data.Persistence.Products;
 public class DAL<T> : IDal<T> where T : BaseModel

@@ -1,0 +1,20 @@
+﻿@inherits CardComponent
+
+<div class="flex gap-2">
+    <img 
+        src="@(Product.Images.Any() ? Product.Images.First().ImageString : "default_image.png")"
+        alt=""
+        class="w-28 h-28 rounded-md hover:scale-110 hover:-rotate-2 duration-300" 
+    />
+
+    <divc class="flex w-full flex-column">
+        <p class="font-bold">@Product.Name</p>
+        <p class="text-sm">@Product.Description</p>
+        <div class="flex items-center gap-2 justify-between mt-3">
+            <p class="font-bold text-lg">@Product.Price.ToString("C")</p>
+            <button class="bg-gray-900 px-5 rounded">
+                <MudIcon Class="text-white text-lg" Icon="@Icons.Material.Filled.AddShoppingCart" />
+            </button>
+        </div>
+    </divc>
+</div>

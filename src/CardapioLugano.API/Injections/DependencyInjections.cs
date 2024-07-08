@@ -5,7 +5,7 @@ using CardapioLugano.Data.Persistence;
 using CardapioLugano.Data.Persistence.Interfaces;
 using CardapioLugano.Data.Persistence.Products;
 using CardapioLugano.Data.Token;
-using CardapioLugano.Modelos.Modelos;
+using CardapioLugano.Modelos.Models;
 
 namespace CardapioLugano.API.Injections;
 

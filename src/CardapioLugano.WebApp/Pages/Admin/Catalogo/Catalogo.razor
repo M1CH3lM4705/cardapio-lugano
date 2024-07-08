@@ -1,0 +1,33 @@
+﻿@page "/admin/catalogo"
+
+@inherits CatalogoPage
+
+<MudText Typo="Typo.h3">Catalogo</MudText>
+<div class="d-flex justify-end">
+    <MudButton Variant="Variant.Filled"
+               Color="Color.Primary"
+               StartIcon="@Icons.Material.TwoTone.Add"
+               Href="/categorias/adicionar">
+        NOVA CATEGORIA
+    </MudButton>
+</div>
+
+<MudGrid Justify="Justify.Center">
+    @foreach(var product in Products)
+    {
+        <MudItem xs="6" sm="3">
+            <MudCard>
+                <MudCardMedia Image="@(product.Images.Any() ? product.Images.First().ImageString : "default_image.png")" Height="100" />
+                <MudCardContent>
+                    <MudText Typo="Typo.h5">@product.Name</MudText>
+                    <MudText Typo="Typo.body2">@product.Description</MudText>
+                </MudCardContent>
+                <MudCardActions>
+                    <MudButton Variant="Variant.Text" Color="Color.Primary">
+                        <MudIcon Icon="@Icons.Material.Filled.AddShoppingCart" />
+                    </MudButton>
+                </MudCardActions>
+            </MudCard>
+        </MudItem>
+    }
+</MudGrid>

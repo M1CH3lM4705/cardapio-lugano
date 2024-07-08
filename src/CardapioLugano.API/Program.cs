@@ -1,9 +1,11 @@
+using CardapioLugano.API.Configuration;
 using CardapioLugano.API.Endpoints;
 using CardapioLugano.API.Injections;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.AddCrossOrigin();
 builder.Services.AddServicesInjection(builder.Configuration);
 
 builder.Services.AddAuthenticationWithToken(builder.Configuration);
@@ -18,6 +20,8 @@ var app = builder.Build();
 app.UseAuthentication();
 
 app.UseAuthorization();
+
+app.UseCors("wasm");
 
 app.MapEndpointsApi();
 

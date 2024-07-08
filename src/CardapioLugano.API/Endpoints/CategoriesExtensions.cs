@@ -2,7 +2,7 @@
 using CardapioLugano.API.Extensions;
 using CardapioLugano.API.Requests;
 using CardapioLugano.Data.Persistence.Interfaces;
-using CardapioLugano.Modelos.Modelos;
+using CardapioLugano.Modelos.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 

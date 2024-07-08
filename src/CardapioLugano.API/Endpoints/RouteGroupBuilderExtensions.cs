@@ -1,5 +1,5 @@
 ﻿using CardapioLugano.Data.Persistence.Interfaces;
-using CardapioLugano.Modelos.Modelos;
+using CardapioLugano.Modelos.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CardapioLugano.API.Endpoints;

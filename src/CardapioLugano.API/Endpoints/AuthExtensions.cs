@@ -1,7 +1,8 @@
 ﻿using CardapioLugano.API.Requests;
+using CardapioLugano.API.Responses;
 using CardapioLugano.Data.Persistence.Interfaces;
 using CardapioLugano.Data.Token;
-using CardapioLugano.Modelos.Modelos;
+using CardapioLugano.Modelos.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CardapioLugano.API.Endpoints;
@@ -21,6 +22,9 @@ public static class AuthExtensions
 
             var tk = token.GenerateToken(session);
 
+            var result = new LoginResponse(tk, session.ProviderUid);
+
+            var response = new Response<LoginResponse>(result);
             return Results.Ok(tk);
         });
     }

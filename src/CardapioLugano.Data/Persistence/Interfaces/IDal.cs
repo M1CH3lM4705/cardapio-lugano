@@ -1,5 +1,5 @@
 ﻿using Appwrite.Models;
-using CardapioLugano.Modelos.Modelos;
+using CardapioLugano.Modelos.Models;
 
 namespace CardapioLugano.Data.Persistence.Interfaces;
 public interface IDal<T> where T : BaseModel
