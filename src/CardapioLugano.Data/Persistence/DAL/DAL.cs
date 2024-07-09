@@ -13,6 +13,7 @@ public class DAL<T> : IDal<T> where T : BaseModel
     private readonly Account _account;
     private readonly string databaseId;
     private readonly string storageId;
+    private readonly Users _users;
     public DAL(string collectionId, IAppwriteBase appwriteBase)
     {
         this.collectionId = collectionId;
@@ -21,6 +22,7 @@ public class DAL<T> : IDal<T> where T : BaseModel
         storageId = appwriteBase.BucketId!;
         _storage = appwriteBase.Storage;
         _account = appwriteBase.Account;
+        _users = appwriteBase.Users;
     }
 
     public async Task<DocumentList> ListDocuments(List<string>? queries = null)
@@ -118,4 +120,7 @@ public class DAL<T> : IDal<T> where T : BaseModel
 
         return session;
     }
+
+    public async Task<User> GetUser(string id) =>
+        await _users.Get(userId: id);
 }

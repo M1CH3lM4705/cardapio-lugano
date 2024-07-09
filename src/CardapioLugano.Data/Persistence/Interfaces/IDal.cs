@@ -12,4 +12,5 @@ public interface IDal<T> where T : BaseModel
     Task<Session> Login(string username, string password);
     Task<Appwrite.Models.File> UploadFile(byte[] fileByte, string mimeType);
     Task<byte[]> GetFileView(string id);
+    Task<User> GetUser(string id);
 }

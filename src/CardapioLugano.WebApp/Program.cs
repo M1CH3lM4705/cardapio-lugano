@@ -1,6 +1,8 @@
+using Blazored.LocalStorage;
 using CardapioLugano.WebApp;
 using CardapioLugano.WebApp.Configuration;
 using CardapioLugano.WebApp.Services;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using MudBlazor.Services;
@@ -13,8 +15,15 @@ builder.Services.AddMudServices();
 
 builder.Services.AddAuthorizationCore();
 
+builder.Services.AddCascadingAuthenticationState();
+
+builder.Services.AddBlazoredLocalStorage();
+builder.Services.AddBlazoredLocalStorage(config => config.JsonSerializerOptions.WriteIndented = true);
+builder.Services.AddScoped<AuthenticationStateProvider, AuthService>();
+builder.Services.AddTransient(sp => (AuthService)sp.GetRequiredService<AuthenticationStateProvider>());
+builder.Services.AddTransient<ProductService>();
+
 builder.Services.AddHttpClients();
 
-builder.Services.AddTransient<ProductService>();
 
 await builder.Build().RunAsync();

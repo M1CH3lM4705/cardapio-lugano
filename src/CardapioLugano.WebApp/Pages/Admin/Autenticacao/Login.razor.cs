@@ -1,27 +1,54 @@
 ﻿using CardapioLugano.WebApp.Requests;
 using CardapioLugano.WebApp.Services;
 using Microsoft.AspNetCore.Components;
+using MudBlazor;
 
 namespace CardapioLugano.WebApp.Pages.Admin.Autenticacao;
 
 public class LoginPage : ComponentBase
 {
-    [Inject] ProductService AuthApi { get; set; } = null!;
+    #region Services
+    [Inject] AuthService AuthApi { get; set; } = null!;
     [Inject] NavigationManager NavigationManager { get; set; } = null!;
 
+    [Inject] ISnackbar Snackbar { get; set; } = null!;
+    #endregion
+
+    #region Properties
     protected string email;
     protected string senha;
+    protected bool IsBusy { get; set; } = false;
+    #endregion 
 
     [SupplyParameterFromQuery]
     public string? ReturnUrl { get; set; }
     protected async Task FazerLogin()
     {
-        var req = new LoginRequest(email, senha);
-        var resposta = await AuthApi.LoginAsync(req);
+        IsBusy = true;
 
-        if (resposta.IsSuccess && ReturnUrl is not null)
+        try
         {
-            NavigationManager.NavigateTo(ReturnUrl);
+
+            var req = new LoginRequest(email, senha);
+            var result = await AuthApi.LoginAsync(req);
+
+            if (result.IsSuccess)
+            {
+                NavigationManager.NavigateTo(ReturnUrl);
+            }
+            else
+            {
+                Snackbar.Add(result.Message, Severity.Error);
+            }
+        }
+        catch (Exception ex)
+        {
+
+            Snackbar.Add(ex.Message, Severity.Error);
+        }
+        finally
+        {
+            IsBusy = false;
         }
     }
 }

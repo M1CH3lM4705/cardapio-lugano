@@ -15,10 +15,14 @@ public class AppwriteBase : IAppwriteBase
             .SetProject(appwrite.Value.ProjectId!)
             .SetKey(appwrite.Value.ApiKey!);
 
+        var session = new Client()
+            .SetEndpoint(appwrite.Value.Endpoint!)
+            .SetProject(appwrite.Value.ProjectId!);
+
         Databases = new Databases(client);
         Storage = new Storage(client);
         Account = new Account(client);
-        Users = new Users(client);
+        Users = new Users(session);
 
         Id = appwrite.Value.DatabaseId!;
         BucketId = appwrite.Value.StorageId!;

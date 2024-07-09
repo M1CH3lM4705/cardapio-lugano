@@ -11,7 +11,7 @@
 
     <AuthorizeView>
         <Authorized>
-            <p>Coce esta conectado @context.User.Identity!.Name</p>
+            <p>Você esta conectado @context.User.Identity!.Name</p>
         </Authorized>
         <NotAuthorized>
             <MudForm>
@@ -27,10 +27,17 @@
                               Required="true" RequiredError="Senha obrigatória!"
                               OnlyValidateIfDirty="true" />
 
-                <MudButton Variant="Variant.Filled" Color="Color.Primary"
-                           Class="my-6" @onclick="FazerLogin">
-                    Login
-                </MudButton>
+                @if (IsBusy)
+                {
+                    <MudProgressCircular Indeterminate="true" Color="Color.Primary" />
+                }
+                else
+                {
+                    <MudButton Variant="Variant.Filled" Color="Color.Primary"
+                               Class="my-6" @onclick="FazerLogin">
+                        Login
+                    </MudButton>
+                }
 
             </MudForm>
         </NotAuthorized>
