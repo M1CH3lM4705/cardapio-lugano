@@ -10,24 +10,38 @@ public class DAL<T> : IDal<T> where T : BaseModel
     private readonly string collectionId;
     private readonly Databases _databases;
     private readonly Storage _storage;
-    private readonly Account _account;
     private readonly string databaseId;
     private readonly string storageId;
     private readonly Users _users;
-    public DAL(string collectionId, IAppwriteBase appwriteBase)
+    private readonly Client _clientSession;
+    private readonly AuthenticatedUser _user;
+    public DAL(string collectionId, IAppwriteBase appwriteBase, AuthenticatedUser user)
     {
         this.collectionId = collectionId;
         _databases = appwriteBase.Databases;
         databaseId = appwriteBase.Id!;
         storageId = appwriteBase.BucketId!;
         _storage = appwriteBase.Storage;
-        _account = appwriteBase.Account;
         _users = appwriteBase.Users;
+        _clientSession = appwriteBase.ClientSession;
+        _user = user;
     }
 
     public async Task<DocumentList> ListDocuments(List<string>? queries = null)
     {
-        DocumentList result = await _databases.ListDocuments(
+        Databases db;
+
+        if (string.IsNullOrEmpty(_user.Session))
+        {
+            db = _databases;
+        }
+        else
+        {
+            _clientSession.SetSession(_user.Session);
+
+            db = new Databases(_clientSession);
+        }
+        DocumentList result = await db.ListDocuments(
             databaseId: databaseId,
             collectionId: collectionId,
             queries: queries // optional
@@ -116,11 +130,16 @@ public class DAL<T> : IDal<T> where T : BaseModel
 
     public async Task<Session> Login(string username, string password)
     {
-        var session = await _account.CreateEmailPasswordSession(username, password);
+        var account = new Account(_clientSession);
+        var session = await account.CreateEmailPasswordSession(username, password);
 
         return session;
     }
 
-    public async Task<User> GetUser(string id) =>
-        await _users.Get(userId: id);
+    public async Task<User> GetUser(string id)
+    {
+        var result = await _users.Get(userId: id);
+
+        return result;
+    }
 }

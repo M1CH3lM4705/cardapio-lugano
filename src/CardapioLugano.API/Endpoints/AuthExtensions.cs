@@ -22,9 +22,9 @@ public static class AuthExtensions
 
             var tk = token.GenerateToken(session);
 
-            var user = await dal.GetUser(session.UserId);
+            //var user = await dal.GetUser(session.UserId);
 
-            var result = new LoginResponse(tk, user.Name, session.ProviderUid);
+            var result = new LoginResponse(tk, "", session.ProviderUid);
 
             var response = new Response<LoginResponse>(result);
             return Results.Ok(response);

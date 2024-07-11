@@ -34,7 +34,7 @@ public class LoginPage : ComponentBase
 
             if (result.IsSuccess)
             {
-                NavigationManager.NavigateTo(ReturnUrl);
+                NavigationManager.NavigateTo(ReturnUrl ?? "/admin/dashboard");
             }
             else
             {

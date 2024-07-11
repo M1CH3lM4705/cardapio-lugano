@@ -15,6 +15,10 @@ public static class DependencyInjections
     {
         services.Configure<AppwriteConfiguration>(config.GetSection(nameof(AppwriteConfiguration)));
 
+        services.AddHttpContextAccessor();
+
+        services.AddTransient<AuthenticatedUser>();
+
         services.AddTransient<IAppwriteBase, AppwriteBase>();
 
         services.AddTransient(typeof(IDal<>), typeof(DAL<>));
@@ -23,49 +27,63 @@ public static class DependencyInjections
         {
             var appwriteService = sp.GetRequiredService<IAppwriteBase>();
 
-            return new DAL<Product>(Product.Products, appwriteService);
+            var userService = sp.GetRequiredService<AuthenticatedUser>();
+
+            return new DAL<Product>(Product.Products, appwriteService, userService);
         });
 
         services.AddTransient<IDal<Category>>(sp =>
         {
             var appwriteService = sp.GetRequiredService<IAppwriteBase>();
 
-            return new DAL<Category>(Category.Categories, appwriteService);
+            var userService = sp.GetRequiredService<AuthenticatedUser>();
+
+            return new DAL<Category>(Category.Categories, appwriteService, userService);
         });
 
         services.AddTransient<IDal<Order>>(sp =>
         {
             var appwriteService = sp.GetRequiredService<IAppwriteBase>();
 
-            return new DAL<Order>(Order.Orders, appwriteService);
+            var userService = sp.GetRequiredService<AuthenticatedUser>();
+
+            return new DAL<Order>(Order.Orders, appwriteService, userService);
         });
 
         services.AddTransient<IDal<OrderItem>>(sp =>
         {
             var appwriteService = sp.GetRequiredService<IAppwriteBase>();
 
-            return new DAL<OrderItem>(OrderItem.OrderItems, appwriteService);
+            var userService = sp.GetRequiredService<AuthenticatedUser>();
+
+            return new DAL<OrderItem>(OrderItem.OrderItems, appwriteService, userService);
         });
 
         services.AddTransient<IDal<Cart>>(sp =>
         {
             var appwriteService = sp.GetRequiredService<IAppwriteBase>();
 
-            return new DAL<Cart>(Cart.Carts, appwriteService);
+            var userService = sp.GetRequiredService<AuthenticatedUser>();
+
+            return new DAL<Cart>(Cart.Carts, appwriteService, userService);
         });
 
         services.AddTransient<IDal<CartItem>>(sp =>
         {
             var appwriteService = sp.GetRequiredService<IAppwriteBase>();
 
-            return new DAL<CartItem>(CartItem.CartItems, appwriteService);
+            var userService = sp.GetRequiredService<AuthenticatedUser>();
+
+            return new DAL<CartItem>(CartItem.CartItems, appwriteService, userService);
         });
 
         services.AddTransient<IDal<Image>>(sp =>
         {
             var appwriteService = sp.GetRequiredService<IAppwriteBase>();
 
-            return new DAL<Image>(Image.Images, appwriteService);
+            var userService = sp.GetRequiredService<AuthenticatedUser>();
+
+            return new DAL<Image>(Image.Images, appwriteService, userService);
         });
 
         services.AddTransient<ICartServices, CartServices>();
