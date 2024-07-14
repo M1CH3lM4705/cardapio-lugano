@@ -21,7 +21,9 @@ builder.Services.AddBlazoredLocalStorage();
 builder.Services.AddBlazoredLocalStorage(config => config.JsonSerializerOptions.WriteIndented = true);
 builder.Services.AddScoped<AuthenticationStateProvider, AuthService>();
 builder.Services.AddTransient(sp => (AuthService)sp.GetRequiredService<AuthenticationStateProvider>());
+builder.Services.AddScoped<HttpHandler>();
 builder.Services.AddTransient<ProductService>();
+builder.Services.AddTransient<CategoryService>();
 
 builder.Services.AddHttpClients();
 

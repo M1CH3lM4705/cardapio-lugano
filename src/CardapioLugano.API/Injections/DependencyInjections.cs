@@ -6,6 +6,7 @@ using CardapioLugano.Data.Persistence.Interfaces;
 using CardapioLugano.Data.Persistence.Products;
 using CardapioLugano.Data.Token;
 using CardapioLugano.Modelos.Models;
+using Microsoft.Extensions.Options;
 
 namespace CardapioLugano.API.Injections;
 
@@ -29,7 +30,9 @@ public static class DependencyInjections
 
             var userService = sp.GetRequiredService<AuthenticatedUser>();
 
-            return new DAL<Product>(Product.Products, appwriteService, userService);
+            var options = sp.GetRequiredService<IOptions<AppwriteConfiguration>>();
+
+            return new DAL<Product>(Product.Products, appwriteService, userService, options);
         });
 
         services.AddTransient<IDal<Category>>(sp =>
@@ -38,7 +41,9 @@ public static class DependencyInjections
 
             var userService = sp.GetRequiredService<AuthenticatedUser>();
 
-            return new DAL<Category>(Category.Categories, appwriteService, userService);
+            var options = sp.GetRequiredService<IOptions<AppwriteConfiguration>>();
+
+            return new DAL<Category>(Category.Categories, appwriteService, userService, options);
         });
 
         services.AddTransient<IDal<Order>>(sp =>
@@ -47,7 +52,9 @@ public static class DependencyInjections
 
             var userService = sp.GetRequiredService<AuthenticatedUser>();
 
-            return new DAL<Order>(Order.Orders, appwriteService, userService);
+            var options = sp.GetRequiredService<IOptions<AppwriteConfiguration>>();
+
+            return new DAL<Order>(Order.Orders, appwriteService, userService, options);
         });
 
         services.AddTransient<IDal<OrderItem>>(sp =>
@@ -56,7 +63,9 @@ public static class DependencyInjections
 
             var userService = sp.GetRequiredService<AuthenticatedUser>();
 
-            return new DAL<OrderItem>(OrderItem.OrderItems, appwriteService, userService);
+            var options = sp.GetRequiredService<IOptions<AppwriteConfiguration>>();
+
+            return new DAL<OrderItem>(OrderItem.OrderItems, appwriteService, userService, options);
         });
 
         services.AddTransient<IDal<Cart>>(sp =>
@@ -65,7 +74,9 @@ public static class DependencyInjections
 
             var userService = sp.GetRequiredService<AuthenticatedUser>();
 
-            return new DAL<Cart>(Cart.Carts, appwriteService, userService);
+            var options = sp.GetRequiredService<IOptions<AppwriteConfiguration>>();
+
+            return new DAL<Cart>(Cart.Carts, appwriteService, userService, options);
         });
 
         services.AddTransient<IDal<CartItem>>(sp =>
@@ -74,7 +85,9 @@ public static class DependencyInjections
 
             var userService = sp.GetRequiredService<AuthenticatedUser>();
 
-            return new DAL<CartItem>(CartItem.CartItems, appwriteService, userService);
+            var options = sp.GetRequiredService<IOptions<AppwriteConfiguration>>();
+
+            return new DAL<CartItem>(CartItem.CartItems, appwriteService, userService, options);
         });
 
         services.AddTransient<IDal<Image>>(sp =>
@@ -83,7 +96,9 @@ public static class DependencyInjections
 
             var userService = sp.GetRequiredService<AuthenticatedUser>();
 
-            return new DAL<Image>(Image.Images, appwriteService, userService);
+            var options = sp.GetRequiredService<IOptions<AppwriteConfiguration>>();
+
+            return new DAL<Image>(Image.Images, appwriteService, userService, options);
         });
 
         services.AddTransient<ICartServices, CartServices>();

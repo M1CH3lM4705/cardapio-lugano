@@ -600,8 +600,8 @@ video {
   margin-left: 1rem;
 }
 
-.ml-auto {
-  margin-left: auto;
+.mr-3 {
+  margin-right: 0.75rem;
 }
 
 .mt-3 {
@@ -729,6 +729,11 @@ video {
 
 .bg-center {
   background-position: center;
+}
+
+.px-10 {
+  padding-left: 2.5rem;
+  padding-right: 2.5rem;
 }
 
 .px-2 {

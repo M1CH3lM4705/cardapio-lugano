@@ -1,4 +1,6 @@
-﻿namespace CardapioLugano.WebApp.Configuration;
+﻿using CardapioLugano.WebApp.Services;
+
+namespace CardapioLugano.WebApp.Configuration;
 
 public static class ClientConfiguration
 {
@@ -10,6 +12,7 @@ public static class ClientConfiguration
             opt =>
             {
                 opt.BaseAddress = new Uri(WebConfiguration.BackendUrl);
-            });
+            })
+            .AddHttpMessageHandler<HttpHandler>();
     }
 }

@@ -35,27 +35,14 @@ public static class ProductsExtensions
             return Results.Ok(product);
         }).WithOrder(2).AllowAnonymous();
 
-        groupBuilder.MapPost("", async ([FromServices] IDal<Product> dal, ProductRequest req) =>
+        groupBuilder.MapPost("", async ([FromServices] IProductService service, ProductRequest req) =>
         {
-            var product = new Product(
-                    req.Name,
-                    req.Description,
-                    req.Price,
-                    req.StockQuantity,
-                    req.CategoryId
-                );
+            var result = await service.CreateProductAsync(req);
 
-            try
-            {
-                await dal.CreateDocument(product);
-            }
-            catch (AppwriteException ex)
-            {
+            return result.IsSuccess ?
+                Results.Ok(result) : 
+                Results.BadRequest(result);
 
-                return Results.BadRequest(ex);
-            }
-
-            return Results.Created();
         }).WithOrder(3)
             .RequireAuthorization();
 

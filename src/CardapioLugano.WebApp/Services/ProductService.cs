@@ -1,37 +1,54 @@
 ﻿using CardapioLugano.WebApp.Configuration;
 using CardapioLugano.WebApp.Requests;
 using CardapioLugano.WebApp.Responses;
+using Microsoft.AspNetCore.Components.Forms;
 using System.Net;
 using System.Net.Http.Json;
 
 namespace CardapioLugano.WebApp.Services;
 
-public class ProductService(IHttpClientFactory httpClientFactory)
+public class ProductService(IHttpClientFactory httpClientFactory) : Service
 {
     private readonly HttpClient _client = httpClientFactory.CreateClient(WebConfiguration.ClientName);
     public async Task<PagedResponse<List<ProductResponse>?>> GetAllAsync() =>
         await _client.GetFromJsonAsync<PagedResponse<List<ProductResponse>?>>("products")
             ?? new PagedResponse<List<ProductResponse>?>(null, (int)HttpStatusCode.BadRequest, "Não foi possível obter os produtos");
 
-    public async Task<Response<string>> LoginAsync(LoginRequest login)
+    public async Task<Response<ProductResponse>> CreateProduct(ProductRequest request)
     {
-        var result = await _client.PostAsJsonAsync("auth/login", login);
-        var token = await result.Content.ReadFromJsonAsync<string>();
-        if(result.IsSuccessStatusCode)
+        var result = await _client.PostAsJsonAsync("products", request);
+        var produto = await DeserializarObjetoResponse<Response<ProductResponse>>(result);
+        
+        if (TratarErrosResponse(result))
         {
-            return new Response<string>(token);
+            return produto;
         }
 
-        return new Response<string>(null, 401, "Usuário ou senha inválidos");
+        return new Response<ProductResponse>(null, (int)result.StatusCode, produto.Message);
     }
 
-    internal async Task CreateProduct(ProductRequest request)
+    public async Task<bool> DeleteAsync(string id)
     {
-        throw new NotImplementedException();
+        var result = await _client.DeleteAsync($"products/{id}");
+
+        return await DeserializarObjetoResponse<bool>(result);
     }
 
-    internal async Task<ICollection<CategoryResponse>?> GetAllCategoriesAsync()
+    public async Task UploadFileAsync(string id, IBrowserFile file)
     {
-        throw new NotImplementedException();
+        try
+        {
+            await _client.PostAsync($"products/{id}/upload", ContentForm(file));
+        }
+        catch (Exception ex)
+        {
+
+            Console.WriteLine(ex.Message);
+        }
+    }
+
+    internal async Task UpdateAsync(ProductRequest request)
+    {
+        await _client.PutAsJsonAsync($"products/{request.Id}", request);
     }
 }

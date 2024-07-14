@@ -1,5 +1,6 @@
 ﻿using Appwrite;
 using CardapioLugano.API.Extensions;
+using CardapioLugano.API.Requests;
 using CardapioLugano.API.Responses;
 using CardapioLugano.API.Services.Interfaces;
 using CardapioLugano.API.Utils;
@@ -21,6 +22,33 @@ public class ProductService : IProductService
         _dalProduct = dalProduct;
         _dalImage = dalImage;
         projectId = config.Value.ProjectId;
+    }
+
+    public async Task<Response<ProductResponse>> CreateProductAsync(ProductRequest request)
+    {
+
+        try
+        {
+            var product = new Product(
+                    request.Name,
+                    request.Description,
+                    request.Price,
+                    request.StockQuantity,
+                    request.CategoryId
+                );
+
+            var result = (Product)await _dalProduct.CreateDocument(product);
+
+            return new Response<ProductResponse>(result);
+        }
+        catch (AppwriteException ex)
+        {
+
+            return new Response<ProductResponse>(null, 500, ex.Message);
+        }
+
+        
+
     }
 
     public async Task<PagedResponse<List<ProductResponse>?>> GetAll(List<Query>? queries = null, int page = 0, int pageSize = 25)

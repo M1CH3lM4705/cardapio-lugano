@@ -15,10 +15,6 @@ public class AppwriteBase : IAppwriteBase
             .SetProject(appwrite.Value.ProjectId!)
             .SetKey(appwrite.Value.ApiKey!);
 
-       ClientSession  = new Client()
-            .SetEndpoint(appwrite.Value.Endpoint!)
-            .SetProject(appwrite.Value.ProjectId!);
-
         Databases = new Databases(client);
         Storage = new Storage(client);
         Account = new Account(client);
@@ -28,7 +24,6 @@ public class AppwriteBase : IAppwriteBase
         BucketId = appwrite.Value.StorageId!;
     }
 
-    public Client ClientSession { get; }
     public Databases Databases {  get; }
     public Storage Storage { get; }
     public Account Account { get; }

@@ -1,0 +1,21 @@
+﻿@inherits FormDialogComponent
+
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Edit" Class="mr-3 mb-n1" />
+            Editar
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudTextField Value="@ProductResponse.Id" Label="ID"  />
+        <MudTextField @bind-Value="productName" Label="Nome"  />
+        <MudTextField @bind-Value="price" Label="Preço"  />
+        <MudTextField @bind-Value="stockQuantity" Label="Quantidade" />
+        <MudSwitch @bind-Value="Active" Label="Ativo ?" Color="Color.Success" />
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancelar</MudButton>
+        <MudButton Color="Color.Error" OnClick="Edit">Editar</MudButton>
+    </DialogActions>
+</MudDialog>
