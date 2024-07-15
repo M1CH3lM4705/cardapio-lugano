@@ -18,6 +18,7 @@ public class TokenGenerator : ITokenGenerator
 
     public string GenerateToken(Session session)
     {
+        var expires = DateTime.Parse(session.Expire);
         var tokenHandler = new JwtSecurityTokenHandler();
 
         var key = Encoding.ASCII.GetBytes(_configuration.GetValue<string>("ApiKey")!);
@@ -30,7 +31,7 @@ public class TokenGenerator : ITokenGenerator
                     new Claim(ClaimTypes.Email, session.ProviderUid),
                     new Claim(ClaimTypes.UserData, JsonSerializer.Serialize(session))
                 }),
-            Expires = DateTime.UtcNow.AddHours(1),
+            Expires = expires,
 
             SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),
         };

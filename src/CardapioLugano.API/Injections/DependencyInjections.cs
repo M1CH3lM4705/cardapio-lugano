@@ -5,7 +5,8 @@ using CardapioLugano.Data.Persistence;
 using CardapioLugano.Data.Persistence.Interfaces;
 using CardapioLugano.Data.Persistence.Products;
 using CardapioLugano.Data.Token;
-using CardapioLugano.Modelos.Modelos;
+using CardapioLugano.Modelos.Models;
+using Microsoft.Extensions.Options;
 
 namespace CardapioLugano.API.Injections;
 
@@ -15,6 +16,10 @@ public static class DependencyInjections
     {
         services.Configure<AppwriteConfiguration>(config.GetSection(nameof(AppwriteConfiguration)));
 
+        services.AddHttpContextAccessor();
+
+        services.AddTransient<AuthenticatedUser>();
+
         services.AddTransient<IAppwriteBase, AppwriteBase>();
 
         services.AddTransient(typeof(IDal<>), typeof(DAL<>));
@@ -23,49 +28,77 @@ public static class DependencyInjections
         {
             var appwriteService = sp.GetRequiredService<IAppwriteBase>();
 
-            return new DAL<Product>(Product.Products, appwriteService);
+            var userService = sp.GetRequiredService<AuthenticatedUser>();
+
+            var options = sp.GetRequiredService<IOptions<AppwriteConfiguration>>();
+
+            return new DAL<Product>(Product.Products, appwriteService, userService, options);
         });
 
         services.AddTransient<IDal<Category>>(sp =>
         {
             var appwriteService = sp.GetRequiredService<IAppwriteBase>();
 
-            return new DAL<Category>(Category.Categories, appwriteService);
+            var userService = sp.GetRequiredService<AuthenticatedUser>();
+
+            var options = sp.GetRequiredService<IOptions<AppwriteConfiguration>>();
+
+            return new DAL<Category>(Category.Categories, appwriteService, userService, options);
         });
 
         services.AddTransient<IDal<Order>>(sp =>
         {
             var appwriteService = sp.GetRequiredService<IAppwriteBase>();
 
-            return new DAL<Order>(Order.Orders, appwriteService);
+            var userService = sp.GetRequiredService<AuthenticatedUser>();
+
+            var options = sp.GetRequiredService<IOptions<AppwriteConfiguration>>();
+
+            return new DAL<Order>(Order.Orders, appwriteService, userService, options);
         });
 
         services.AddTransient<IDal<OrderItem>>(sp =>
         {
             var appwriteService = sp.GetRequiredService<IAppwriteBase>();
 
-            return new DAL<OrderItem>(OrderItem.OrderItems, appwriteService);
+            var userService = sp.GetRequiredService<AuthenticatedUser>();
+
+            var options = sp.GetRequiredService<IOptions<AppwriteConfiguration>>();
+
+            return new DAL<OrderItem>(OrderItem.OrderItems, appwriteService, userService, options);
         });
 
         services.AddTransient<IDal<Cart>>(sp =>
         {
             var appwriteService = sp.GetRequiredService<IAppwriteBase>();
 
-            return new DAL<Cart>(Cart.Carts, appwriteService);
+            var userService = sp.GetRequiredService<AuthenticatedUser>();
+
+            var options = sp.GetRequiredService<IOptions<AppwriteConfiguration>>();
+
+            return new DAL<Cart>(Cart.Carts, appwriteService, userService, options);
         });
 
         services.AddTransient<IDal<CartItem>>(sp =>
         {
             var appwriteService = sp.GetRequiredService<IAppwriteBase>();
 
-            return new DAL<CartItem>(CartItem.CartItems, appwriteService);
+            var userService = sp.GetRequiredService<AuthenticatedUser>();
+
+            var options = sp.GetRequiredService<IOptions<AppwriteConfiguration>>();
+
+            return new DAL<CartItem>(CartItem.CartItems, appwriteService, userService, options);
         });
 
         services.AddTransient<IDal<Image>>(sp =>
         {
             var appwriteService = sp.GetRequiredService<IAppwriteBase>();
 
-            return new DAL<Image>(Image.Images, appwriteService);
+            var userService = sp.GetRequiredService<AuthenticatedUser>();
+
+            var options = sp.GetRequiredService<IOptions<AppwriteConfiguration>>();
+
+            return new DAL<Image>(Image.Images, appwriteService, userService, options);
         });
 
         services.AddTransient<ICartServices, CartServices>();

@@ -23,6 +23,7 @@ public class AppwriteBase : IAppwriteBase
         Id = appwrite.Value.DatabaseId!;
         BucketId = appwrite.Value.StorageId!;
     }
+
     public Databases Databases {  get; }
     public Storage Storage { get; }
     public Account Account { get; }

@@ -1,9 +1,9 @@
 ﻿using Appwrite;
 using CardapioLugano.API.Requests;
-using CardapioLugano.API.Responses;
 using CardapioLugano.API.Services.Interfaces;
 using CardapioLugano.Data.Persistence.Interfaces;
-using CardapioLugano.Modelos.Modelos;
+using CardapioLugano.Modelos.Models;
+using CardapioLugano.API.Responses;
 
 namespace CardapioLugano.API.Services;
 

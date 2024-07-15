@@ -1,12 +1,15 @@
+using CardapioLugano.API.Configuration;
 using CardapioLugano.API.Endpoints;
 using CardapioLugano.API.Injections;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddServicesInjection(builder.Configuration);
+builder.AddCrossOrigin();
 
 builder.Services.AddAuthenticationWithToken(builder.Configuration);
+
+builder.Services.AddServicesInjection(builder.Configuration);
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -18,6 +21,8 @@ var app = builder.Build();
 app.UseAuthentication();
 
 app.UseAuthorization();
+
+app.UseCors("wasm");
 
 app.MapEndpointsApi();
 

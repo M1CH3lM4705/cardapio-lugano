@@ -1,0 +1,68 @@
+﻿@page "/admin/catalogo"
+@using CardapioLugano.WebApp.Responses
+
+@inherits CatalogoPage
+
+<MudText Typo="Typo.h3">Catalogo</MudText>
+<div class="d-flex justify-end pb-4">
+    <MudButton Variant="Variant.Filled"
+               Color="Color.Primary"
+               StartIcon="@Icons.Material.TwoTone.Add"
+               Href="/admin/produto/cadastrar">
+        NOVA CATEGORIA
+    </MudButton>
+</div>
+
+
+<MudTable ServerData="ServerReload" Hover="true" @ref="ProductsTable">
+    <HeaderContent>
+        <MudTh>Nome</MudTh>
+        <MudTh>Descrição</MudTh>
+        <MudTh>Preço</MudTh>
+        <MudTh>Quantidade</MudTh>
+        <MudTh>Ativo</MudTh>
+        <MudTh>Ações</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Nome">
+            <div class="flex items-center gap-2">
+                <MudImage Class="rounded-lg"
+                          Src="@(context.Images.Any() ? @context.Images.First().ImageString : "default_image.png")"
+                          Alt="image"
+                          Elevation="25"
+                          Width="50"
+                          Height="50" />
+                @context.Name
+            </div>
+        </MudTd>
+        <MudTd DataLabel="Descrição">@context.Description</MudTd>
+        <MudTd DataLabel="Preço">@context.Price.ToString("C")</MudTd>
+        <MudTd DataLabel="Quantidade">@context.StockQuantity</MudTd>
+        <MudTd DataLabel="Ativo">@context.Active</MudTd>
+        <MudTd DataLabel="Ações">
+            <div class="flex items-center gap-2">
+                <MudIconButton
+                    title="Editar"
+                    Icon="@Icons.Material.Filled.Edit"
+                    Variant="Variant.Outlined"
+                    Color="Color.Primary"
+                    Size="Size.Small"
+                               @onclick="@(e => EditShowDialog(@context))" />
+
+                <MudIconButton 
+                    title="Remover"
+                    Icon="@Icons.Material.Filled.Delete"
+                               Variant="Variant.Outlined"
+                               Color="Color.Error"
+                               Size="Size.Small" 
+                               @onclick="@(e => ConfirmDelete(context.Id!))"/>
+            </div>
+        </MudTd>
+    </RowTemplate>
+    <PagerContent>
+        <MudTablePager 
+            PageSizeOptions="new int[] { 6, 12, 24, 48, 96 }" 
+            RowsPerPageString="@rowsPorPerString"/>
+    </PagerContent>
+    
+</MudTable>

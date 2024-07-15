@@ -1,13 +1,11 @@
 ﻿using Appwrite;
-using CardapioLugano.API.Extensions;
-using CardapioLugano.API.Requests;
-using CardapioLugano.API.Responses;
 using CardapioLugano.API.Services.Interfaces;
 using CardapioLugano.API.Utils;
-using CardapioLugano.Data.Authentication;
 using CardapioLugano.Data.Persistence.Interfaces;
-using CardapioLugano.Modelos.Modelos;
+using CardapioLugano.Modelos.Models;
 using Microsoft.AspNetCore.Mvc;
+using CardapioLugano.API.Responses;
+using CardapioLugano.API.Requests;
 
 namespace CardapioLugano.API.Endpoints;
 
@@ -16,20 +14,16 @@ public static class ProductsExtensions
     public static void MapEndpointsProducts(this WebApplication app)
     {
         var groupBuilder = app.MapGroup("products").WithTags("Products")
-            .DisableAntiforgery()
-            .RequireAuthorization();
+            .DisableAntiforgery();
 
-        groupBuilder.MapGet("", async ([FromServices] IDal<Product> dal) =>
+        groupBuilder.MapGet("", async ([FromServices] IProductService service) =>
         {
-            var listadocumentos = await dal.ListDocuments();
+            var result = await service.GetAll();
 
-            if (listadocumentos is null or { Total: 0 })
-            {
-                return Results.NoContent();
-            }
-
-            return Results.Ok(listadocumentos.DocumentListToProductResponseList());
-        }).WithOrder(1);
+            return result.IsSuccess
+                ? Results.Ok(result)
+                : Results.BadRequest(result);
+        }).WithOrder(1).AllowAnonymous();
 
         groupBuilder.MapGet("{id}", async ([FromServices] IProductService service, string id) =>
         {
@@ -39,30 +33,18 @@ public static class ProductsExtensions
             ProductResponse product = await service.GetProductAsync(id);
 
             return Results.Ok(product);
-        }).WithOrder(2);
+        }).WithOrder(2).AllowAnonymous();
 
-        groupBuilder.MapPost("", async ([FromServices] IDal<Product> dal, ProductRequest req) =>
+        groupBuilder.MapPost("", async ([FromServices] IProductService service, ProductRequest req) =>
         {
-            var product = new Product(
-                    req.Name,
-                    req.Description,
-                    req.Price,
-                    req.StockQuantity,
-                    req.CategoryId
-                );
+            var result = await service.CreateProductAsync(req);
 
-            try
-            {
-                await dal.CreateDocument(product);
-            }
-            catch (AppwriteException ex)
-            {
+            return result.IsSuccess ?
+                Results.Ok(result) : 
+                Results.BadRequest(result);
 
-                return Results.BadRequest(ex);
-            }
-
-            return Results.Created();
-        }).WithOrder(3);
+        }).WithOrder(3)
+            .RequireAuthorization();
 
         groupBuilder.MapPut("{id}", async ([FromServices] IDal<Product> dal, string id, ProductRequest req) =>
         {
@@ -87,7 +69,8 @@ public static class ProductsExtensions
 
                 return Results.Problem(detail: ex.Message, statusCode: ex.Code);
             }
-        }).WithOrder(4);
+        }).WithOrder(4)
+            .RequireAuthorization();
 
         groupBuilder.MapPost("{id}/upload", async (
             [FromServices] IProductService service,
@@ -101,8 +84,10 @@ public static class ProductsExtensions
             await service.UploadProductImageAsync(id, file);
 
             return Results.Ok();
-        }).WithOrder(5);
+        }).WithOrder(5)
+            .RequireAuthorization();
 
-        groupBuilder.MapDeleteEndpoint<Product>();
+        groupBuilder.MapDeleteEndpoint<Product>()
+            .RequireAuthorization();
     }
 }

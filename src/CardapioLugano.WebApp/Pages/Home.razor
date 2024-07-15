@@ -1,0 +1,15 @@
+﻿@page "/"
+@inherits HomePage
+@attribute [AllowAnonymous]
+@layout MainLayout
+
+<PageTitle>Home</PageTitle>
+
+<h2 class="text-2xl md:text-3xl font-bold text-center mt-9 mb-6">
+    Conheça nosso menu
+</h2>
+
+@if (Products.Any())
+{
+    <Catalogo Products="@Products"/>    
+}

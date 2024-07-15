@@ -1,8 +1,10 @@
 ﻿using Appwrite;
 using Appwrite.Models;
 using Appwrite.Services;
+using CardapioLugano.Data.Configurations;
 using CardapioLugano.Data.Persistence.Interfaces;
-using CardapioLugano.Modelos.Modelos;
+using CardapioLugano.Modelos.Models;
+using Microsoft.Extensions.Options;
 
 namespace CardapioLugano.Data.Persistence.Products;
 public class DAL<T> : IDal<T> where T : BaseModel
@@ -10,21 +12,43 @@ public class DAL<T> : IDal<T> where T : BaseModel
     private readonly string collectionId;
     private readonly Databases _databases;
     private readonly Storage _storage;
-    private readonly Account _account;
     private readonly string databaseId;
     private readonly string storageId;
-    public DAL(string collectionId, IAppwriteBase appwriteBase)
+    private readonly Users _users;
+    private readonly Client _clientSession;
+    private readonly AuthenticatedUser _user;
+    private readonly Account _account;
+
+    public DAL(string collectionId, IAppwriteBase appwriteBase, AuthenticatedUser user, IOptions<AppwriteConfiguration> options)
     {
         this.collectionId = collectionId;
         _databases = appwriteBase.Databases;
         databaseId = appwriteBase.Id!;
         storageId = appwriteBase.BucketId!;
         _storage = appwriteBase.Storage;
+        _users = appwriteBase.Users;
+        _clientSession = new Client()
+            .SetEndpoint(options.Value.Endpoint!)
+            .SetProject(options.Value.ProjectId!);
+
+        _user = user;
         _account = appwriteBase.Account;
     }
 
     public async Task<DocumentList> ListDocuments(List<string>? queries = null)
     {
+        Databases db;
+
+        if (string.IsNullOrEmpty(_user.Session))
+        {
+            db = _databases;
+        }
+        else
+        {
+            _clientSession.SetSession(_user.Session);
+
+            db = new Databases(_clientSession);
+        }
         DocumentList result = await _databases.ListDocuments(
             databaseId: databaseId,
             collectionId: collectionId,
@@ -113,9 +137,16 @@ public class DAL<T> : IDal<T> where T : BaseModel
     }
 
     public async Task<Session> Login(string username, string password)
-    {
+    { 
         var session = await _account.CreateEmailPasswordSession(username, password);
 
         return session;
+    }
+
+    public async Task<User> GetUser(string id)
+    {
+        var result = await _users.Get(userId: id);
+
+        return result;
     }
 }

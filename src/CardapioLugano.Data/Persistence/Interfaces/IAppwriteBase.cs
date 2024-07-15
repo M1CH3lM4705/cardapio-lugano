@@ -1,4 +1,5 @@
-﻿using Appwrite.Services;
+﻿using Appwrite;
+using Appwrite.Services;
 
 namespace CardapioLugano.Data.Persistence.Interfaces;
 public interface IAppwriteBase

@@ -1,8 +1,9 @@
 ﻿using Appwrite;
 using CardapioLugano.API.Extensions;
 using CardapioLugano.API.Requests;
+using CardapioLugano.API.Responses;
 using CardapioLugano.Data.Persistence.Interfaces;
-using CardapioLugano.Modelos.Modelos;
+using CardapioLugano.Modelos.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
@@ -23,8 +24,12 @@ public static class CategoriesExtensions
                 return Results.NotFound();
             }
 
-            return Results.Ok(listaDocumento.DocumentListToCategoryResponseList());
-        });
+            var result = listaDocumento.DocumentListToCategoryResponseList();
+
+            var response = new PagedResponse<List<CategoryResponse>>(result, 200, (int)listaDocumento.Total);
+
+            return Results.Ok(response);
+        }).RequireAuthorization();
 
         groupBuilder.MapGet("/{id}", async ([FromServices] IDal<Category> dal, string id) =>
         {

@@ -1,5 +1,5 @@
 ﻿using Appwrite.Models;
-using CardapioLugano.Modelos.Modelos;
+using CardapioLugano.Modelos.Models;
 
 namespace CardapioLugano.Data.Persistence.Interfaces;
 public interface IDal<T> where T : BaseModel
@@ -12,4 +12,5 @@ public interface IDal<T> where T : BaseModel
     Task<Session> Login(string username, string password);
     Task<Appwrite.Models.File> UploadFile(byte[] fileByte, string mimeType);
     Task<byte[]> GetFileView(string id);
+    Task<User> GetUser(string id);
 }

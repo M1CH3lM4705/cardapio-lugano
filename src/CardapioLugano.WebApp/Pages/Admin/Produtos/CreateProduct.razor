@@ -1,0 +1,105 @@
+﻿@page "/admin/produto/cadastrar"
+
+@using CardapioLugano.WebApp.Responses
+
+@layout AdminLayout
+
+@inherits CreateProductForm
+
+<PageTitle>Cadastrar produtos</PageTitle>
+
+
+<MudPaper Class="px-8 pt-2 pb-4 mx-12 my-8 justify-center">
+
+    <MudText Class="mt-8" Typo="Typo.h4">Cadastro de Produto</MudText>
+
+    <MudForm>
+
+        <MudTextField Class="mt-4" T="string" Placeholder="Nome do Produto"
+                      Variant="Variant.Outlined"
+                      @bind-Value="productName"
+                      Required="true"
+                      RequiredError="Campo obrigatório." />
+
+        <MudTextField Class="mt-4" T="string" Placeholder="Descrição do Produto"
+                      Variant="Variant.Outlined"
+                      @bind-Value="description"
+                      Lines="4"
+                      Required="false"
+                      RequiredError="Campo obrigatório." />
+
+
+        <MudTextField Class="mt-4"
+            @bind-Value="price" 
+            Label="Preço" 
+            Variant="Variant.Outlined" 
+            Adornment="Adornment.Start" 
+            AdornmentIcon="@Icons.Material.Filled.AttachMoney"
+            Format="F2"
+            Required="true"/>
+
+        <MudTextField Class="mt-4" T="int" Label="Quantidade"
+                      Variant="Variant.Outlined"
+                      @bind-Value="stockQuantity"
+                      Lines="4"
+                      Required="true"
+                      RequiredError="Campo obrigatório." />
+
+        <MudSelect Class="mt-4" T="CategoryResponse" Label="Categorias"
+                   ToStringFunc="@converter"
+                   Variant="Variant.Outlined"
+                   ValueChanged="@CategorySelected"
+                   AnchorOrigin="Origin.BottomCenter"
+                   Clearable>
+            @if (categories is not null)
+            {
+                @foreach (var category in categories)
+                {
+                    <MudSelectItem Value="category" />
+                }
+            }
+        </MudSelect>
+
+        <MudImage Class="mt-4" src="@fileImage" />
+        <MudFileUpload T="IBrowserFile" Accept=".jpeg,.jpg,.png" FilesChanged="UploadFile">
+            <ActivatorContent>
+                <MudButton HtmlTag="label"
+                           Variant="Variant.Filled"
+                           Color="Color.Primary"
+                           StartIcon="@Icons.Material.Filled.PhotoCamera"
+                           >
+                    Imagem do produto
+                </MudButton>
+            </ActivatorContent>
+            <SelectedTemplate>
+                @if(context is not null)
+                {
+                    <MudText>
+                        context.Name
+                    </MudText>
+                }
+                else
+                {
+                    <MudText>Sem anexo</MudText>
+                }
+            </SelectedTemplate>
+        </MudFileUpload>
+
+        <div class="d-flex justify-end gap-2 mt-4">
+            <MudButton Href="/Admin/Catalogo"
+                       Rel="nofollow"
+                       Variant="Variant.Filled"
+                       Color="Color.Secondary"
+                       >
+                Cancelar
+            </MudButton>
+            <MudButton Variant="Variant.Filled"
+                       @onclick="Save"
+                       Color="Color.Primary"
+                       >
+                Cadastrar
+            </MudButton>
+        </div>
+
+    </MudForm>
+</MudPaper>

@@ -20,7 +20,7 @@ public class PagedResponse<TData> : Response<TData>
     public PagedResponse(
         TData? data,
         int code = 200,
-        string? message = null) : base(data, code, message) 
+        string? message = null) : base(data, code, message)
     {
     }
 
