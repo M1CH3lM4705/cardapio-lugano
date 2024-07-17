@@ -9,6 +9,7 @@
 <MudLayout>
     <MudAppBar Color="Color.Surface" Fixed="true" Elevation="2">
         <MudImage Src="logo.png" Width="100" Height="100"></MudImage>
+        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" @onclick="DrawerToggle" />
         <MudSpacer />
         <AuthorizeView>
             <Authorized>

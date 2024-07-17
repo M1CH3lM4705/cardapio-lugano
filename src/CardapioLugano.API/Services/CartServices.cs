@@ -16,17 +16,17 @@ public class CartServices : ICartServices
         _cartDal = cartDal;
     }
 
-    public async Task<CartResponse> AddCartItem(CartItemRequest cartItemRequest)
+    public async Task<Response<CartResponse>> AddCartItem(CartItemRequest cartItemRequest)
     {
         CartItem cartItem = 
-            new CartItem(cartItemRequest.ProductId, cartItemRequest.Quantity, cartItemRequest.UnitPrice, cartItemRequest.Name);
+            new(cartItemRequest.ProductId, 1, cartItemRequest.UnitPrice, cartItemRequest.Name);
 
         var cartDocument = await _cartDal.ListDocuments();
 
         if (cartDocument is null or { Total: 0 })
             throw new AppwriteException(message:"Não há nenhum carrinho existente", code:500);
 
-        var cart = (Cart)cartDocument.Documents.First();
+        var cart = (Cart)cartDocument.Documents!.FirstOrDefault(x => x.Id == cartItemRequest.CartId)! ?? cartDocument.Documents.First();
 
         var (Exists, Id) = cart.CartItemsExists(cartItem);
 
@@ -44,6 +44,6 @@ public class CartServices : ICartServices
 
         var result = (Cart)await _cartDal.UpdateDocument(cart.Id!, cart);
 
-        return result;
+        return new Response<CartResponse>(result);
     }
 }

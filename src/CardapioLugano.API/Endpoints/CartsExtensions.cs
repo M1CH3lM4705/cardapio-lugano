@@ -43,9 +43,9 @@ public static class CartsExtensions
 
             try
             {
-                await dal.CreateDocument(cart);
+                var result = await dal.CreateDocument(cart);
 
-                return Results.Created();
+                return Results.Created("", result.Id);
             }
             catch (AppwriteException ex)
             {

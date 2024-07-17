@@ -1,0 +1,38 @@
+﻿@page "/admin/categorias/cadastrar"
+
+@layout AdminLayout
+
+@inherits CreateCategoryForm
+
+<PageTitle>Cadastrar Categoria</PageTitle>
+
+<MudPaper Class="px-8 pt-2 pb-4 mx-12 my-8 justify-center">
+    <MudText Class="mt-8" Typo="Typo.h4">Cadastro de Categoria</MudText>
+
+    <MudForm>
+
+        <MudTextField
+            Class="mt-4"
+            T="string"
+            Placeholder="Nome da categoria"
+            Variant="Variant.Outlined"
+            @bind-Value="CategoryName"
+            Required="true"
+            RequiredError="Campo obrigatório" />
+
+
+        <div class="d-flex justify-end gap-2 mt-4">
+            <MudButton Href="/Admin/Catalogo"
+                       Rel="nofollow"
+                       Variant="Variant.Filled"
+                       Color="Color.Secondary">
+                Cancelar
+            </MudButton>
+            <MudButton Variant="Variant.Filled"
+                       @onclick="Save"
+                       Color="Color.Primary">
+                Cadastrar
+            </MudButton>
+        </div>
+    </MudForm>
+</MudPaper>
