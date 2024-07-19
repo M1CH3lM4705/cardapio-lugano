@@ -16,6 +16,7 @@ public class CardComponent : ComponentBase
     [Parameter]
     public ProductResponse Product { get; set; } = null!;
 
+    protected bool IsBusy { get; set; } = false;
     #endregion
 
     #region Services
@@ -33,11 +34,14 @@ public class CardComponent : ComponentBase
 
     protected async Task AddItemCart(string id)
     {
+        IsBusy = true;
         var request = new CartItemRequest(Product.Id, (int)Product.StockQuantity, Product.Price, Product.Name, id);
 
         await CartService.AddItemCartAsync(request);
 
         Publisher.HasChanged(id);
+
+        IsBusy = false;
     }
 
     #endregion

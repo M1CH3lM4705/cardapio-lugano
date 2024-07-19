@@ -13,8 +13,14 @@
         <p class="text-sm">@Product.Description</p>
         <div class="flex items-center gap-2 justify-between mt-3">
             <p class="font-bold text-lg">@Product.Price.ToString("C")</p>
-            <button class="bg-gray-900 px-5 rounded" @onclick="@(e => AddItemCart(Id))">
-                <MudIcon Class="text-white text-lg" Icon="@Icons.Material.Filled.AddShoppingCart" />
+            <button Disabled="@IsBusy" class="bg-gray-900 px-5 rounded" @onclick="@(e => AddItemCart(Id))">
+                @if (IsBusy)
+                {
+                    <MudProgressCircular Class="ms-n1 text-white" Size="Size.Small" Indeterminate="true" />
+                    <MudIcon Class="ms-2 text-white text-lg" Icon="@Icons.Material.Filled.AddShoppingCart" />
+                }else{
+                    <MudIcon Class="text-white text-lg" Icon="@Icons.Material.Filled.AddShoppingCart" />
+                }
             </button>
         </div>
     </divc>

@@ -33,7 +33,7 @@ public class FooterComponent : ComponentBase
             {
 
                 var result = await CartService.GetCartByIdAsync(id);
-                CountCart = result!.CartItems.Count;
+                CountCart = result!.CartItems.Sum(x => x.Quantity);
                 StateHasChanged();
             });
 
