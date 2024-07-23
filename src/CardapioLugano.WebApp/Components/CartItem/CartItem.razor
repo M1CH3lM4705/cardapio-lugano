@@ -1,0 +1,25 @@
+﻿@inherits CartItemComponent
+<MudCard>
+    <MudCardContent>
+        <MudStack>
+            <MudPaper Class="pa-4">
+                <MudStack Justify="Justify.SpaceBetween" Row="true">
+                    <div>
+                        <MudImage Src="default_image.png" class="w-28 h-28 rounded-md hover:scale-110 hover:-rotate-2 duration-300" />
+                        <MudStack Justify="Justify.Center" Spacing="0">
+                            <MudText>@CartItem.Name</MudText>
+                            <MudText>@CartItem.UnitPrice.ToString("C")</MudText>
+                        </MudStack>
+                    </div>
+                    <MudStack AlignItems="AlignItems.Center" Class="Justify-items-end" Row="true">
+                        <MudIconButton Size="Size.Small" Icon="@Icons.Material.Filled.Remove" aria-label="delete"
+                            @onclick="@(e => CartItemRemove(CartItem))"
+                        ></MudIconButton>
+                        <MudText>@CartItem.Quantity</MudText>
+                        <MudIconButton Size="Size.Small" Icon="@Icons.Material.Filled.Add" aria-label="Add"></MudIconButton>
+                    </MudStack>
+                </MudStack>
+            </MudPaper>
+        </MudStack>
+    </MudCardContent>
+</MudCard>

@@ -8,6 +8,7 @@ public class FooterComponent : ComponentBase
 {
     #region Properties
     protected int CountCart {  get; set; } = 0;
+    protected string? Id { get; set; }
     #endregion
 
     #region Services
@@ -17,12 +18,21 @@ public class FooterComponent : ComponentBase
     [Inject]
     private CartService CartService { get; set; } = null!;
 
+    [Inject]
+    NavigationManager NavigationManager { get; set; } = null!;
+
     #endregion
 
     #region Methods
     protected override void OnInitialized()
     {
         Publisher.OnHasChanged += ChangedCart;
+        Publisher.OnHasChanged += AddIdCart;
+    }
+
+    protected void GoToCart()
+    {
+        NavigationManager.NavigateTo($"/carrinho/{Id}");
     }
 
     private void ChangedCart(string id)
@@ -33,11 +43,14 @@ public class FooterComponent : ComponentBase
             {
 
                 var result = await CartService.GetCartByIdAsync(id);
-                CountCart = result!.CartItems.Sum(x => x.Quantity);
+                CountCart = result!.TotalItems;
                 StateHasChanged();
             });
 
         }
     }
+
+    private void AddIdCart(string id) =>
+        Id = id;
     #endregion
 }

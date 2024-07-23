@@ -9,11 +9,11 @@ public class FormDialogComponent : ComponentBase
 {
     #region Properties
 
-    protected string productName;
-    protected string description;
+    protected string? productName;
+    protected string? description;
     protected double price;
     protected int stockQuantity;
-    protected string categoryId;
+    protected string? categoryId;
     protected bool Active { get; set; } = true;
     protected string? fileImage;
 
@@ -49,11 +49,11 @@ public class FormDialogComponent : ComponentBase
 
     protected void Edit()
     {
-        var productResponse = new ProductRequest(ProductResponse.Id, productName, description,
+        var productResponse = new ProductRequest(ProductResponse.Id, productName!, description!,
             price,
             stockQuantity,
             Active,
-            categoryId);
+            categoryId!);
 
         MudDialog?.Close(DialogResult.Ok(productResponse));
         Snackbar.Add("Item Atualizado", Severity.Success);

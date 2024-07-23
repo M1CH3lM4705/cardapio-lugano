@@ -39,7 +39,7 @@ public class AuthService(IHttpClientFactory httpClientFactory, ILocalStorageServ
         if (response.IsSuccessStatusCode)
         {
             var result = await response.Content.ReadFromJsonAsync<Response<LoginResponse>>();
-            await localStorage.SetItemAsync("token", result!.Data.Token);
+            await localStorage.SetItemAsync("token", result!.Data!.Token);
             NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
             _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", result.Data.Token);
             return result;
@@ -53,7 +53,7 @@ public class AuthService(IHttpClientFactory httpClientFactory, ILocalStorageServ
         var jsonBytes = ParseBase64WithoutPadding(payload);
         var keyValuePairs = JsonSerializer.Deserialize<Dictionary<string, object>>(jsonBytes);
 
-        return keyValuePairs!.Select(kvp => new Claim(kvp.Key, kvp.Value.ToString()));
+        return keyValuePairs!.Select(kvp => new Claim(kvp.Key, kvp.Value.ToString()!));
     }
 
     private static byte[] ParseBase64WithoutPadding(string base64)

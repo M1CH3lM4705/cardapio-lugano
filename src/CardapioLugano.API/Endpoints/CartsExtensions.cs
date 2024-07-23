@@ -61,6 +61,13 @@ public static class CartsExtensions
             return Results.Ok(result);
         });
 
+        groupBuilder.MapDelete("remove-cart-item/{id}", async ([FromServices] ICartServices cartServices, string id) =>
+        {
+            await cartServices.RemoveCartItem(id);
+
+            return Results.NoContent();
+        });
+
         groupBuilder.MapPut("{id}", async ([FromServices] IDal<Cart> dal, [FromBody] CartRequest req, string id) =>
         {
             var order = new Cart(req.CustomerId!, null);

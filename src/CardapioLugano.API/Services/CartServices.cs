@@ -10,10 +10,12 @@ namespace CardapioLugano.API.Services;
 public class CartServices : ICartServices
 {
     private readonly IDal<Cart> _cartDal;
+    private readonly IDal<CartItem> _cartItem;
 
-    public CartServices(IDal<Cart> cartDal)
+    public CartServices(IDal<Cart> cartDal, IDal<CartItem> cartItem)
     {
         _cartDal = cartDal;
+        _cartItem = cartItem;
     }
 
     public async Task<Response<CartResponse>> AddCartItem(CartItemRequest cartItemRequest)
@@ -45,5 +47,20 @@ public class CartServices : ICartServices
         var result = (Cart)await _cartDal.UpdateDocument(cart.Id!, cart);
 
         return new Response<CartResponse>(result);
+    }
+
+    public async Task RemoveCartItem(string id)
+    {
+        CartItem cartItem = await _cartItem.GetDocument(id);
+
+        Cart cart = await _cartDal.GetDocument(cartItem.CartId!);
+
+        var (Exists, _) = cart.CartItemsExists(cartItem);
+
+        if (!Exists) return;
+
+        cart.RemoveCartItem(cartItem);
+
+        await _cartDal.UpdateDocument(cart.Id!, cart);
     }
 }

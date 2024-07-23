@@ -1,5 +1,29 @@
-﻿@page "/carrinho"
+﻿@page "/carrinho/{id}"
+@attribute [AllowAnonymous]
+@layout EmptyLayout
 
-@layout MainLayout
+@inherits CartPage
 
 <PageTitle>Carrinho</PageTitle>
+
+@if(Cart != null)
+{
+    <MudPaper>
+        <MudText Typo="Typo.h6">Sacola (@Cart!.TotalItems)</MudText>
+    </MudPaper>
+}
+
+<MudPaper>
+    @if (Cart != null && Cart!.CartItems.Any())
+    {
+        @foreach(var item in Cart.CartItems)
+        {
+            <CartItem CartItem="@item" />
+        }
+
+    }
+    else
+    {
+        <MudText>Sacola Vazia</MudText>
+    }
+</MudPaper>

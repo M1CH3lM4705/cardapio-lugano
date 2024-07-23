@@ -6,4 +6,5 @@ namespace CardapioLugano.API.Services.Interfaces;
 public interface ICartServices
 {
     Task<Response<CartResponse>> AddCartItem(CartItemRequest cartItemRequest);
+    Task RemoveCartItem(string id);
 }

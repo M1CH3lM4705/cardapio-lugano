@@ -24,4 +24,9 @@ public class CartService(IHttpClientFactory httpClientFactory) : Service
     {
         return await _client.GetFromJsonAsync<CartResponse?>($"cart/{id}");
     }
+
+    internal async Task RemoveCartAsync(CartItemRequest req)
+    {
+        await _client.DeleteAsync($"cart/remove-cart-item/{req.Id}");
+    }
 }

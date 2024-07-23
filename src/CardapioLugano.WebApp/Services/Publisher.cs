@@ -4,10 +4,10 @@ namespace CardapioLugano.WebApp.Services;
 
 public class Publisher : IPublisher
 {
-    public event Action<string> OnHasChanged;
+    public event Action<string>? OnHasChanged;
 
     public void HasChanged(string id)
     {
-        OnHasChanged.Invoke(id);
+        OnHasChanged!.Invoke(id);
     }
 }

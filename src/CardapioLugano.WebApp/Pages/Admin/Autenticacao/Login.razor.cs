@@ -15,8 +15,8 @@ public class LoginPage : ComponentBase
     #endregion
 
     #region Properties
-    protected string email;
-    protected string senha;
+    protected string? email;
+    protected string? senha;
     protected bool IsBusy { get; set; } = false;
     #endregion 
 
@@ -29,7 +29,7 @@ public class LoginPage : ComponentBase
         try
         {
 
-            var req = new LoginRequest(email, senha);
+            var req = new LoginRequest(email!, senha!);
             var result = await AuthApi.LoginAsync(req);
 
             if (result.IsSuccess)
