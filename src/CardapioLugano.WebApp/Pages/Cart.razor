@@ -18,7 +18,7 @@
     {
         @foreach(var item in Cart.CartItems)
         {
-            <CartItem CartItem="@item" />
+            <CartItem CartItem="@item" DecreaseCart="CartItemRemove" IncreaseCart="CartItemAdd"/>
         }
 
     }

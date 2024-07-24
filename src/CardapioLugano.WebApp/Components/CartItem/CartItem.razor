@@ -13,10 +13,12 @@
                     </div>
                     <MudStack AlignItems="AlignItems.Center" Class="Justify-items-end" Row="true">
                         <MudIconButton Size="Size.Small" Icon="@Icons.Material.Filled.Remove" aria-label="delete"
-                            @onclick="@(e => CartItemRemove(CartItem))"
+                            @onclick="@(() => DecreaseCart.InvokeAsync(CartItem))"
                         ></MudIconButton>
                         <MudText>@CartItem.Quantity</MudText>
-                        <MudIconButton Size="Size.Small" Icon="@Icons.Material.Filled.Add" aria-label="Add"></MudIconButton>
+                        <MudIconButton Size="Size.Small" Icon="@Icons.Material.Filled.Add" aria-label="Add"
+                            @onclick="@(() => IncreaseCart.InvokeAsync(CartItem))"
+                        ></MudIconButton>
                     </MudStack>
                 </MudStack>
             </MudPaper>

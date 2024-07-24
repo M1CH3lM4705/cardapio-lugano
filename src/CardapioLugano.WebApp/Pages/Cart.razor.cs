@@ -1,4 +1,5 @@
-﻿using CardapioLugano.WebApp.Responses;
+﻿using CardapioLugano.WebApp.Requests;
+using CardapioLugano.WebApp.Responses;
 using CardapioLugano.WebApp.Services;
 using Microsoft.AspNetCore.Components;
 
@@ -17,6 +18,7 @@ public class CartPage : ComponentBase
 
     [Inject]
     CartService CartService { get; set; } = null!;
+
     #endregion
 
     #region Methods
@@ -24,6 +26,46 @@ public class CartPage : ComponentBase
     protected override async Task OnInitializedAsync()
     {
         Cart = await CartService.GetCartByIdAsync(Id);
+    }
+
+    protected async Task CartItemRemove(CartItemResponse cartItem)
+    {
+        if (cartItem is null) return;
+
+        var req = new CartItemRequest(cartItem.Id,
+                                    cartItem.ProductId,
+                                    cartItem.Quantity,
+                                    cartItem.UnitPrice,
+                                    cartItem.Name,
+                                    Cart!.Id!);
+
+
+        if(cartItem.Quantity > 1)
+            cartItem.Quantity--;
+
+        await CartService.RemoveCartAsync(req);
+
+        if (cartItem.Quantity == 1)
+            Cart!.CartItems.Remove(Cart.CartItems.FirstOrDefault(x => x.Id == cartItem.Id)!);
+    }
+
+    protected async Task CartItemAdd(CartItemResponse cartItem)
+    {
+        if (cartItem is null) return;
+
+        var req = new CartItemRequest(cartItem.Id,
+                                    cartItem.ProductId,
+                                    cartItem.Quantity,
+                                    cartItem.UnitPrice,
+                                    cartItem.Name,
+                                    Cart!.Id!);
+
+
+        if (cartItem.Quantity >= 1)
+            cartItem.Quantity++;
+
+        await CartService.AddItemCartAsync(req);
+
     }
 
     #endregion

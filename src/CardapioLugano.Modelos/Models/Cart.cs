@@ -81,14 +81,14 @@ public class Cart : BaseModel
         if (!Exists) return;
 
         var exist = GetProductId(item.ProductId!);
-        
-        if(exist.Quantity >= 1)
-        {
-            exist.RemoveUnit();
-            CalculateValuesCartItems();
-            return;
-        }
-        CartItems.Remove(GetProductId(item.ProductId!));
+
+
+        exist.RemoveUnit();
+        CalculateValuesCartItems();
+
+
+        if (exist.Quantity == 0)
+            CartItems.Remove(GetProductId(item.ProductId!));
 
     }
 
