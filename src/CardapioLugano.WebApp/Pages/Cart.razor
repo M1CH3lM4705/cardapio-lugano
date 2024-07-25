@@ -13,7 +13,7 @@
     </MudPaper>
 }
 
-<MudPaper>
+<MudPaper Class="flex justify-center items-center h-screen flex-col">
     @if (Cart != null && Cart!.CartItems.Any())
     {
         @foreach(var item in Cart.CartItems)
@@ -24,6 +24,10 @@
     }
     else
     {
+
+        <div class="relative w-40 h-40 rounded-full bg-blue-500">
+            <div class="absolute inset-0 bg-center bg-cover" style="background-image: url('./empty-bag.png');"></div>
+        </div>
         <MudText>Sacola Vazia</MudText>
     }
 </MudPaper>

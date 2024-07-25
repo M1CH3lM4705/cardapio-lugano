@@ -32,6 +32,9 @@ public class CartPage : ComponentBase
     {
         if (cartItem is null) return;
 
+        var quantity = cartItem.Quantity;
+        quantity--;
+
         var req = new CartItemRequest(cartItem.Id,
                                     cartItem.ProductId,
                                     cartItem.Quantity,
@@ -41,11 +44,11 @@ public class CartPage : ComponentBase
 
 
         if(cartItem.Quantity > 1)
-            cartItem.Quantity--;
+            cartItem.RemoveOneQuantity();
 
         await CartService.RemoveCartAsync(req);
 
-        if (cartItem.Quantity == 1)
+        if (cartItem.Quantity == 1 && quantity == 0)
             Cart!.CartItems.Remove(Cart.CartItems.FirstOrDefault(x => x.Id == cartItem.Id)!);
     }
 
@@ -62,7 +65,7 @@ public class CartPage : ComponentBase
 
 
         if (cartItem.Quantity >= 1)
-            cartItem.Quantity++;
+            cartItem.AddOneQuantity();
 
         await CartService.AddItemCartAsync(req);
 
