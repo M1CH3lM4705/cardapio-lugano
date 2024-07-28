@@ -6,28 +6,44 @@
 
 <PageTitle>Carrinho</PageTitle>
 
-@if(Cart != null)
-{
-    <MudPaper>
-        <MudText Typo="Typo.h6">Sacola (@Cart!.TotalItems)</MudText>
-    </MudPaper>
-}
+<MudPaper Class="mt-12 mb-2 pa-4">
+    <MudText Class="font-semibold text-2xl" Typo="Typo.h6">Sacola (@(Cart != null ? Cart!.TotalItems : 0))</MudText>
+</MudPaper>
 
-<MudPaper Class="flex justify-center items-center h-screen flex-col">
+@if (IsBusy)
+{
+    <CardLoad />
+}
+else
+{
     @if (Cart != null && Cart!.CartItems.Any())
     {
-        @foreach(var item in Cart.CartItems)
-        {
-            <CartItem CartItem="@item" DecreaseCart="CartItemRemove" IncreaseCart="CartItemAdd"/>
-        }
-
+        <MudPaper Elevation="0" Class="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-10 mx-auto max-w-7xl mb-16">
+            @foreach (var item in Cart.CartItems)
+            {
+                <CartItem CartItem="@item" DecreaseCart="CartItemRemove" IncreaseCart="CartItemAdd" />
+            }
+        </MudPaper>
+        
+        <MudPaper Class="h-20 w-full my-8 px-4">
+            <MudStack Row="true" Class="justify-between items-center pt-[9px]">
+                <MudStack Class="flex justify-between">
+                    <MudText>Total</MudText>
+                    <p class="font-bold text-lg">@Cart.TotalAmount</p>
+                </MudStack>
+                <MudStack Class="justify-center">
+                    <MudButton Variant="Variant.Filled" Color="Color.Error">Continuar</MudButton>
+                </MudStack>
+            </MudStack>
+        </MudPaper>
     }
     else
     {
-
-        <div class="relative w-40 h-40 rounded-full bg-blue-500">
-            <div class="absolute inset-0 bg-center bg-cover" style="background-image: url('./empty-bag.png');"></div>
-        </div>
-        <MudText>Sacola Vazia</MudText>
+        <MudPaper Class="flex justify-center items-center h-screen flex-col">
+            <div class="relative w-40 h-40 rounded-full bg-blue-500">
+                <div class="absolute inset-0 bg-center bg-cover" style="background-image: url('./empty-bag.png');"></div>
+            </div>
+            <MudText class="font-semibold">Sacola Vazia</MudText>
+        </MudPaper>
     }
-</MudPaper>
+}

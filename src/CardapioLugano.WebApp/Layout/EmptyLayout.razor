@@ -1,10 +1,23 @@
 ﻿@inherits LayoutComponentBase
 
+<MudThemeProvider Theme="currentTheme" />
+<MudDialogProvider />
+<MudSnackbarProvider />
 
 <MudLayout>    
+    <MudAppBar Color="Color.Primary">
+        <MudNavLink Href="/" Icon="@Icons.Material.Filled.ArrowBackIos"></MudNavLink>
+    </MudAppBar>
     <MudMainContent>
         <MudContainer MaxWidth="MaxWidth.Medium">
             @Body
         </MudContainer>
     </MudMainContent>
 </MudLayout>
+
+@code {
+    private MudTheme currentTheme = new MudTheme()
+        {
+            PaletteDark = LuganoPallete.CreatePallete
+        };
+}

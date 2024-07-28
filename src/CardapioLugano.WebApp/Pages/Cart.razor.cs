@@ -11,7 +11,9 @@ public class CartPage : ComponentBase
     [Parameter]
     public string Id { get; set; } = string.Empty;
 
-    protected CartResponse? Cart;
+    protected CartResponse? Cart { get; set; } = null;
+
+    protected bool IsBusy { get; set; } = false;
     #endregion
 
     #region Services
@@ -25,7 +27,10 @@ public class CartPage : ComponentBase
 
     protected override async Task OnInitializedAsync()
     {
+        IsBusy = true;
+
         Cart = await CartService.GetCartByIdAsync(Id);
+        IsBusy = false;
     }
 
     protected async Task CartItemRemove(CartItemResponse cartItem)
@@ -50,6 +55,8 @@ public class CartPage : ComponentBase
 
         if (cartItem.Quantity == 1 && quantity == 0)
             Cart!.CartItems.Remove(Cart.CartItems.FirstOrDefault(x => x.Id == cartItem.Id)!);
+
+        Cart.UpdateCart();
     }
 
     protected async Task CartItemAdd(CartItemResponse cartItem)
@@ -69,6 +76,7 @@ public class CartPage : ComponentBase
 
         await CartService.AddItemCartAsync(req);
 
+        Cart.UpdateCart();
     }
 
     #endregion

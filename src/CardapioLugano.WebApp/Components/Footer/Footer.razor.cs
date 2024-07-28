@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace CardapioLugano.WebApp.Components.Footer;
 
-public class FooterComponent : ComponentBase
+public class FooterComponent : ComponentBase, IDisposable
 {
     #region Properties
     protected int CountCart {  get; set; } = 0;
@@ -52,5 +52,11 @@ public class FooterComponent : ComponentBase
 
     private void AddIdCart(string id) =>
         Id = id;
+
+    public void Dispose()
+    {
+        Publisher.OnHasChanged -= ChangedCart;
+        Publisher.OnHasChanged -= AddIdCart;
+    }
     #endregion
 }
