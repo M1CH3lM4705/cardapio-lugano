@@ -76,8 +76,20 @@ public class Cart : BaseModel
 
     public void RemoveCartItem(CartItem item)
     {
-        CartItems.Remove(GetProductId(item.ProductId!));
+        var (Exists, _) = CartItemsExists(item);
 
+        if (!Exists) return;
+
+        var exist = GetProductId(item.ProductId!);
+
+
+        exist.RemoveUnit();
         CalculateValuesCartItems();
+
+
+        if (exist.Quantity == 0)
+            CartItems.Remove(GetProductId(item.ProductId!));
+
     }
+
 }

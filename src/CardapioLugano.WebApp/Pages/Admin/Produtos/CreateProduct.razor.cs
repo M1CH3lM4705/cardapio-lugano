@@ -18,12 +18,12 @@ public class CreateProductForm : ComponentBase
     #endregion
 
     #region Properties
-    protected string productName;
-    protected string description;
+    protected string? productName;
+    protected string? description;
     protected double price;
     protected int stockQuantity;
     protected string? fileImage;
-    protected IBrowserFile imageByte;
+    protected IBrowserFile? imageByte;
 
     protected ICollection<CategoryResponse>? categories;
 
@@ -44,12 +44,12 @@ public class CreateProductForm : ComponentBase
 
     protected async Task Save()
     {
-        var request = new ProductRequest("",productName, description, price, stockQuantity, true, Category!.Id!);
+        var request = new ProductRequest("",productName!, description!, price, stockQuantity, true, Category!.Id!);
 
         var result = await ProductService.CreateProduct(request);
 
         if (result.IsSuccess)
-            await ProductService.UploadFileAsync(result.Data!.Id!, imageByte);
+            await ProductService.UploadFileAsync(result.Data!.Id!, imageByte!);
         else
         {
             Snackbar.Add(result.Message, Severity.Error);

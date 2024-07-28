@@ -1,7 +1,9 @@
 using Blazored.LocalStorage;
 using CardapioLugano.WebApp;
 using CardapioLugano.WebApp.Configuration;
+using CardapioLugano.WebApp.GlobalState;
 using CardapioLugano.WebApp.Services;
+using CardapioLugano.WebApp.Services.Interfaces;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
@@ -22,8 +24,11 @@ builder.Services.AddBlazoredLocalStorage(config => config.JsonSerializerOptions.
 builder.Services.AddScoped<AuthenticationStateProvider, AuthService>();
 builder.Services.AddTransient(sp => (AuthService)sp.GetRequiredService<AuthenticationStateProvider>());
 builder.Services.AddScoped<HttpHandler>();
+builder.Services.AddSingleton<IPublisher, Publisher>();
 builder.Services.AddTransient<ProductService>();
 builder.Services.AddTransient<CategoryService>();
+builder.Services.AddTransient<CartService>();
+builder.Services.AddSingleton<CartState>();
 
 builder.Services.AddHttpClients();
 

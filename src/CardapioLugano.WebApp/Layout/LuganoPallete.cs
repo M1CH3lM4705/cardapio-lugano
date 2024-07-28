@@ -7,9 +7,9 @@ public class LuganoPallete : PaletteDark
 {
     private LuganoPallete()
     {
-        Primary = new MudColor("rgba(173,173,177,1)");
-        Secondary = new MudColor("#F6AD31");
-        Tertiary = new MudColor("#8AE491");
+        Primary = new MudColor("#4E342E");
+        Secondary = new MudColor("#8D6E63");
+        Tertiary = new MudColor("#D7CCC8");
     }
 
     public static LuganoPallete CreatePallete => new();

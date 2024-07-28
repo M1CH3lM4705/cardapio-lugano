@@ -1,0 +1,12 @@
+﻿@inherits FooterComponent
+
+<footer class="w-full mx-auto h-12 py-2 fixed bottom-2 z-40 flex items-center justify-center">
+    <button class="flex bg-red-500 rounded-lg opacity-25 hover:opacity-100 duration-300 py-1 px-3.5 items-center text-white font-bold gap-2"
+        @onclick="@(e => GoToCart())"    
+    >
+        Visualizar Sacola
+        <MudBadge Content="@CountCart" Overlap="true" class="mx-2 my-2">
+            <MudIcon Class="text-lg text-white" Icon="@Icons.Material.Filled.ShoppingBag" />
+        </MudBadge>
+    </button>
+</footer>

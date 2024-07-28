@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using Appwrite.Models;
+using Newtonsoft.Json;
+
 
 namespace CardapioLugano.Modelos.Models;
 
@@ -52,4 +54,9 @@ public class CartItem : BaseModel
 
     public void UpdateUnit(int unit) =>
         Quantity = unit;
+
+    public void RemoveUnit() => Quantity--;
+
+    public static implicit operator CartItem(Document data) =>
+        new CartItem().ConvertTo<CartItem>(data);
 }

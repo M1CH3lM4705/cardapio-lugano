@@ -1,4 +1,5 @@
 ﻿using CardapioLugano.WebApp.Configuration;
+using CardapioLugano.WebApp.Requests;
 using CardapioLugano.WebApp.Responses;
 using System.Net;
 using System.Net.Http.Json;
@@ -14,5 +15,10 @@ public class CategoryService(IHttpClientFactory httpClientFactory)
             new PagedResponse<List<CategoryResponse>?>(null, (int)HttpStatusCode.BadRequest, "Não foi possível obter os produtos");
 
         return result;
+    }
+
+    internal async Task CreateCategoryAsync(CategoryRequest request)
+    {
+        await _client.PostAsJsonAsync("categories", request);
     }
 }

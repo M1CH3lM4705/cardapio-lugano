@@ -2,12 +2,14 @@
 
 namespace CardapioLugano.API.Responses;
 
-public record CartResponse(string? Id, string TotalAmount, List<CartItemResponse> CartItems)
+public record CartResponse(string? Id, string TotalAmount, List<CartItemResponse> CartItems, int TotalItems = 0)
 {
     public static implicit operator CartResponse(Cart cart)
     {
         var cartItemsresponses = cart.CartItems.Select<CartItem, CartItemResponse>(x => x).ToList();
 
-        return new(cart.Id, cart.TotalAmount!.Value.ToString("C"), cartItemsresponses);
+        var totalItems = cartItemsresponses.Sum(x => x.Quantity);
+
+        return new(cart.Id, cart.TotalAmount!.Value.ToString("C"), cartItemsresponses, totalItems);
     }
 }

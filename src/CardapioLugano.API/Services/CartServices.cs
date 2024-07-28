@@ -10,23 +10,25 @@ namespace CardapioLugano.API.Services;
 public class CartServices : ICartServices
 {
     private readonly IDal<Cart> _cartDal;
+    private readonly IDal<CartItem> _cartItem;
 
-    public CartServices(IDal<Cart> cartDal)
+    public CartServices(IDal<Cart> cartDal, IDal<CartItem> cartItem)
     {
         _cartDal = cartDal;
+        _cartItem = cartItem;
     }
 
-    public async Task<CartResponse> AddCartItem(CartItemRequest cartItemRequest)
+    public async Task<Response<CartResponse>> AddCartItem(CartItemRequest cartItemRequest)
     {
         CartItem cartItem = 
-            new CartItem(cartItemRequest.ProductId, cartItemRequest.Quantity, cartItemRequest.UnitPrice, cartItemRequest.Name);
+            new(cartItemRequest.ProductId, 1, cartItemRequest.UnitPrice, cartItemRequest.Name);
 
         var cartDocument = await _cartDal.ListDocuments();
 
         if (cartDocument is null or { Total: 0 })
             throw new AppwriteException(message:"Não há nenhum carrinho existente", code:500);
 
-        var cart = (Cart)cartDocument.Documents.First();
+        var cart = (Cart)cartDocument.Documents!.FirstOrDefault(x => x.Id == cartItemRequest.CartId)! ?? cartDocument.Documents.First();
 
         var (Exists, Id) = cart.CartItemsExists(cartItem);
 
@@ -44,6 +46,21 @@ public class CartServices : ICartServices
 
         var result = (Cart)await _cartDal.UpdateDocument(cart.Id!, cart);
 
-        return result;
+        return new Response<CartResponse>(result);
+    }
+
+    public async Task RemoveCartItem(string id)
+    {
+        CartItem cartItem = await _cartItem.GetDocument(id);
+
+        Cart cart = await _cartDal.GetDocument(cartItem.CartId!);
+
+        var (Exists, _) = cart.CartItemsExists(cartItem);
+
+        if (!Exists) return;
+
+        cart.RemoveCartItem(cartItem);
+
+        await _cartDal.UpdateDocument(cart.Id!, cart);
     }
 }

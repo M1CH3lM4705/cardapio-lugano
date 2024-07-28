@@ -99,7 +99,7 @@ public class CatalogoPage : ComponentBase
 
         if (!result!.Canceled)
         {
-            await Edit((ProductRequest)result.Data);
+            await Edit((ProductRequest)result.Data!);
         }
     }
     protected async Task ConfirmDelete(string id)

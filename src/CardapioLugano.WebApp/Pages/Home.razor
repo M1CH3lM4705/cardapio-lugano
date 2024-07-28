@@ -11,5 +11,7 @@
 
 @if (Products.Any())
 {
-    <Catalogo Products="@Products"/>    
+    <CascadingValue Value="@CartState.Cart">
+        <Catalogo Products="@Products"/>    
+    </CascadingValue>
 }

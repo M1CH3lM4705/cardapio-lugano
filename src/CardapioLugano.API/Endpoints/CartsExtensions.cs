@@ -43,9 +43,9 @@ public static class CartsExtensions
 
             try
             {
-                await dal.CreateDocument(cart);
+                var result = await dal.CreateDocument(cart);
 
-                return Results.Created();
+                return Results.Created("", result.Id);
             }
             catch (AppwriteException ex)
             {
@@ -59,6 +59,13 @@ public static class CartsExtensions
             var result = await cartServices.AddCartItem(req);
 
             return Results.Ok(result);
+        });
+
+        groupBuilder.MapDelete("remove-cart-item/{id}", async ([FromServices] ICartServices cartServices, string id) =>
+        {
+            await cartServices.RemoveCartItem(id);
+
+            return Results.NoContent();
         });
 
         groupBuilder.MapPut("{id}", async ([FromServices] IDal<Cart> dal, [FromBody] CartRequest req, string id) =>
