@@ -1,5 +1,6 @@
 using CardapioLugano.API.Configuration;
 using CardapioLugano.API.Endpoints;
+using CardapioLugano.API.Extensions;
 using CardapioLugano.API.Injections;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,6 +24,8 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.UseCors("wasm");
+
+app.MapEndpoints();
 
 app.MapEndpointsApi();
 
