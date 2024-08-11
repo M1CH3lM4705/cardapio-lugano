@@ -3,5 +3,5 @@
 public static class WebConfiguration
 {
     public const string ClientName = "Api";
-    public const string BackendUrl = "https://localhost:7290";
+    public const string BackendUrl = "http://localhost:5220";
 }

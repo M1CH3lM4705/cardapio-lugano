@@ -20,9 +20,9 @@ public class CartService(IHttpClientFactory httpClientFactory) : Service
         await _client.PostAsJsonAsync("cart/add-cart-item", request);
     }
 
-    public async Task<CartResponse?> GetCartByIdAsync(string id)
+    public async Task<Response<CartResponse>?> GetCartByIdAsync(string id)
     {
-        return await _client.GetFromJsonAsync<CartResponse?>($"cart/{id}");
+        return await _client.GetFromJsonAsync<Response<CartResponse>>($"cart/{id}");
     }
 
     internal async Task RemoveCartAsync(CartItemRequest req)

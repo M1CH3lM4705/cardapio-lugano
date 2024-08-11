@@ -1,27 +1,55 @@
 ﻿@inherits CartItemComponent
-<MudCard class="">
-    <MudCardContent>
-        
-            <MudPaper Class="pa-4" Elevation="0">
-                <MudStack Justify="Justify.SpaceBetween" Row="true">
-                    <div>
-                        <MudImage Src="default_image.png" class="w-28 h-28 rounded-md hover:scale-110 hover:-rotate-2 duration-300" />
-                        <MudStack Justify="Justify.Center" Spacing="0">
-                            <MudText>@CartItem.Name</MudText>
-                            <MudText>@CartItem.UnitPrice.ToString("C")</MudText>
-                        </MudStack>
-                    </div>
-                    <MudStack AlignItems="AlignItems.Center" Class="Justify-items-end" Row="true">
-                        <MudIconButton Size="Size.Small" Icon="@Icons.Material.Filled.Remove" aria-label="delete"
-                            @onclick="@(() => DecreaseCart.InvokeAsync(CartItem))"
-                        ></MudIconButton>
-                        <MudText>@CartItem.Quantity</MudText>
-                        <MudIconButton Size="Size.Small" Icon="@Icons.Material.Filled.Add" aria-label="Add"
-                            @onclick="@(() => IncreaseCart.InvokeAsync(CartItem))"
-                        ></MudIconButton>
-                    </MudStack>
-                </MudStack>
-            </MudPaper>
-        
-    </MudCardContent>
-</MudCard>
+
+
+<div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
+    <div class="p-6 grid grid-cols-[80px_1fr_80px] items-center gap-4">
+        <img src="@(CartItem.UrlImage ?? "default_image.png")"
+             width="80"
+             height="80"
+             alt="Product Image"
+             class="rounded-md"
+             style="aspect-ratio: 80 / 80; object-fit: cover;" />
+        <div>
+            <h3 class="font-medium">@CartItem.Name</h3>
+            <p class="text-muted-foreground text-sm">Stylish and Bright</p>
+        </div>
+        <div class="flex items-center gap-2">
+            <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 w-10"
+                    @onclick="@(() => DecreaseCart.InvokeAsync(CartItem))">
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     width="24"
+                     height="24"
+                     viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="2"
+                     stroke-linecap="round"
+                     stroke-linejoin="round"
+                     class="h-4 w-4">
+                    <path d="M5 12h14"></path>
+                </svg>
+            </button>
+            <span>@CartItem.Quantity</span>
+            <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 w-10"
+                    @onclick="@(() => IncreaseCart.InvokeAsync(CartItem))">
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     width="24"
+                     height="24"
+                     viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="2"
+                     stroke-linecap="round"
+                     stroke-linejoin="round"
+                     class="h-4 w-4">
+                    <path d="M5 12h14"></path>
+                    <path d="M12 5v14"></path>
+                </svg>
+            </button>
+        </div>
+    </div>
+    <div class="p-6 flex items-center justify-between">
+        <span class="text-muted-foreground text-sm">@CartItem.UnitPrice.ToString("C") x @CartItem.Quantity</span>
+        <span class="font-medium">@CartItem.CalculateUnitPriceForQuantity().ToString("C")</span>
+    </div>
+</div>

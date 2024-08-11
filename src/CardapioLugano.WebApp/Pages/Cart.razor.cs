@@ -29,7 +29,10 @@ public class CartPage : ComponentBase
     {
         IsBusy = true;
 
-        Cart = await CartService.GetCartByIdAsync(Id);
+        var result = await CartService.GetCartByIdAsync(Id);
+
+        Cart = result!.Data;
+
         IsBusy = false;
     }
 
@@ -45,7 +48,8 @@ public class CartPage : ComponentBase
                                     cartItem.Quantity,
                                     cartItem.UnitPrice,
                                     cartItem.Name,
-                                    Cart!.Id!);
+                                    Cart!.Id!,
+                                    cartItem.UrlImage);
 
 
         if(cartItem.Quantity > 1)
@@ -68,7 +72,8 @@ public class CartPage : ComponentBase
                                     cartItem.Quantity,
                                     cartItem.UnitPrice,
                                     cartItem.Name,
-                                    Cart!.Id!);
+                                    Cart!.Id!,
+                                    cartItem.UrlImage);
 
 
         if (cartItem.Quantity >= 1)

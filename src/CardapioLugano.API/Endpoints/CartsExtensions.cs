@@ -37,22 +37,6 @@ public static class CartsExtensions
             return Results.Ok(cart);
         });
 
-        groupBuilder.MapPost("", async ([FromServices] IDal<Cart> dal, [FromBody] CartRequest req) =>
-        {
-            var cart = new Cart(req.CustomerId!, null);
-
-            try
-            {
-                var result = await dal.CreateDocument(cart);
-
-                return Results.Created("", result.Id);
-            }
-            catch (AppwriteException ex)
-            {
-
-                return Results.Problem(type: ex.Type, title: ex.Message, statusCode: ex.Code);
-            }
-        });
 
         groupBuilder.MapPost("add-cart-item", async ([FromServices] ICartServices cartServices, CartItemRequest req) =>
         {

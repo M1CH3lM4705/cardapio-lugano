@@ -2,10 +2,10 @@
 
 namespace CardapioLugano.API.Responses;
 
-public record CartItemResponse(string Id, string? ProductId, string Name, int Quantity, double UnitPrice)
+public record CartItemResponse(string Id, string? ProductId, string Name, int Quantity, double UnitPrice, string? UrlImage)
 {
     public static implicit operator CartItemResponse(CartItem cartItem)
     {
-        return new(cartItem.Id!,cartItem.ProductId, cartItem.Name!, cartItem.Quantity, cartItem.UnitPrice);
+        return new(cartItem.Id!,cartItem.ProductId, cartItem.Name!, cartItem.Quantity, cartItem.UnitPrice, cartItem.UrlImage);
     }
 }

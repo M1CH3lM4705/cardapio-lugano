@@ -6,11 +6,9 @@
 
 <PageTitle>Carrinho</PageTitle>
 
-<MudPaper Class="mt-12 mb-2 pa-4">
-    <MudText Class="font-semibold text-2xl" Typo="Typo.h6">Sacola (@(Cart != null ? Cart!.TotalItems : 0))</MudText>
-</MudPaper>
 
-@if (IsBusy)
+
+    @if (IsBusy)
 {
     <CardLoad />
 }
@@ -18,24 +16,39 @@ else
 {
     @if (Cart != null && Cart!.CartItems.Any())
     {
-        <MudPaper Elevation="0" Class="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-10 mx-auto max-w-7xl mb-16">
-            @foreach (var item in Cart.CartItems)
-            {
-                <CartItem CartItem="@item" DecreaseCart="CartItemRemove" IncreaseCart="CartItemAdd" />
-            }
-        </MudPaper>
-        
-        <MudPaper Class="h-20 w-full my-8 px-4">
-            <MudStack Row="true" Class="justify-between items-center pt-[9px]">
-                <MudStack Class="flex justify-between">
-                    <MudText>Total</MudText>
-                    <p class="font-bold text-lg">@Cart.TotalAmount</p>
-                </MudStack>
-                <MudStack Class="justify-center">
-                    <MudButton Variant="Variant.Filled" Color="Color.Error">Continuar</MudButton>
-                </MudStack>
-            </MudStack>
-        </MudPaper>
+        <div class="flex-1 grid md:grid-cols-[1fr_300px] gap-8 p-4 md:p-8">
+            <div>
+                <h1 class="text-2xl font-bold mb-4">Sacola (@(Cart != null ? Cart!.TotalItems : 0))</h1>
+
+                <div class="space-y-4">
+                    @foreach (var item in Cart!.CartItems)
+                    {
+                        <CartItem CartItem="@item" DecreaseCart="CartItemRemove" IncreaseCart="CartItemAdd" />
+                    }
+                </div>
+            </div>
+
+
+            <div class="sticky top-20 bg-background rounded-lg shadow-lg p-6 space-y-4 h-[350px]">
+                <h2 class="text-xl font-bold">Resumo do pedido</h2>
+                <div class="flex items-center justify-between">
+                    <span>Subtotal</span>
+                    <span class="font-medium">@Cart.TotalAmount</span>
+                </div>
+                <div class="flex items-center justify-between">
+                    <span>Taxa de entrega</span>
+                    <span class="font-medium">@(9.99.ToString("C2"))</span>
+                </div>
+                <div data-orientation="horizontal" role="none" class="shrink-0 bg-border h-[1px] w-full"></div>
+                <div class="flex items-center justify-between">
+                    <span class="text-lg font-medium">Total</span>
+                    <span class="text-lg font-medium">@Cart.TotalAmount</span>
+                </div>
+                <button class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-[#18181b] text-[#FAFAFA] hover:bg-primary/90 h-11 rounded-md px-8 w-full">
+                    Continuar
+                </button>
+            </div>
+        </div>
     }
     else
     {
@@ -47,3 +60,4 @@ else
         </MudPaper>
     }
 }
+

@@ -8,8 +8,6 @@ public static class MapEndpoints
         app.MapEndpointsProducts();
         app.MapEndpointsCategories();
         app.MapEndpointsOrders();
-        app.MapEndpointsOrderItems();
-        app.MapEndpointsCarts();
-            
+        app.MapEndpointsOrderItems();            
     }
 }

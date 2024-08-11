@@ -4,6 +4,7 @@ using CardapioLugano.API.Services.Interfaces;
 using CardapioLugano.Data.Persistence.Interfaces;
 using CardapioLugano.Modelos.Models;
 using CardapioLugano.API.Responses;
+using CardapioLugano.Data.Persistence.Products;
 
 namespace CardapioLugano.API.Services;
 
@@ -21,7 +22,7 @@ public class CartServices : ICartServices
     public async Task<Response<CartResponse>> AddCartItem(CartItemRequest cartItemRequest)
     {
         CartItem cartItem = 
-            new(cartItemRequest.ProductId, 1, cartItemRequest.UnitPrice, cartItemRequest.Name);
+            new(cartItemRequest.ProductId, 1, cartItemRequest.UnitPrice, cartItemRequest.Name, cartItemRequest.UrlImage);
 
         var cartDocument = await _cartDal.ListDocuments();
 
@@ -47,6 +48,35 @@ public class CartServices : ICartServices
         var result = (Cart)await _cartDal.UpdateDocument(cart.Id!, cart);
 
         return new Response<CartResponse>(result);
+    }
+
+    public async Task<Response<CartResponse>> CreateAsync(CartRequest request)
+    {
+        var cart = new Cart(request.CustomerId!, null);
+
+        try
+        {
+            var result = (Cart)await _cartDal.CreateDocument(cart);
+
+            return new Response<CartResponse>(result);
+        }
+        catch (AppwriteException ex)
+        {
+
+            return new Response<CartResponse>(null, ex.Code!.Value, ex.Message);
+        }
+    }
+
+    public async Task<Response<CartResponse>> GetByIdAsync(string id)
+    {
+        var documento = await _cartDal.GetDocument(id);
+
+        if (documento is null)
+            return new Response<CartResponse>(null, code: 404, "Carrinho não encontrado.");
+        
+        CartResponse cart = (Cart)documento;
+
+        return new Response<CartResponse>(cart);
     }
 
     public async Task RemoveCartItem(string id)
