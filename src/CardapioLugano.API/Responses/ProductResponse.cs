@@ -10,12 +10,12 @@ public record ProductResponse(
     long StockQuantity,
     bool Active, 
     CategoryResponse Category, 
-    List<ImageResponse> Images)
+    List<ImageResponse?> Images)
 {
     public static implicit operator ProductResponse(Product product)
     {
         return new ProductResponse(product.Id, product.Name, product.Description, product.Price, product.StockQuantity, product.Active, product.Category!,
-            product.Images.Select<Image, ImageResponse>(x => x).ToList()
+            product.Images!.Select<Image, ImageResponse>(x => x).ToList()!
             );
     }
 }

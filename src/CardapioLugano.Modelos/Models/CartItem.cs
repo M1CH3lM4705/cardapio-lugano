@@ -13,12 +13,13 @@ public class CartItem : BaseModel
 
     }
 
-    public CartItem(string? productId, int quantity, double unitPrice, string? name)
+    public CartItem(string? productId, int quantity, double unitPrice, string? name, string? urlImage)
     {
         ProductId = productId;
         Quantity = quantity;
         UnitPrice = unitPrice;
         Name = name;
+        UrlImage = urlImage;
     }
 
     [JsonProperty("cartId")]
@@ -31,6 +32,8 @@ public class CartItem : BaseModel
     public double UnitPrice { get; set; }
     [JsonProperty("name")]
     public string? Name { get; set; }
+    [JsonProperty("urlImage")]
+    public string? UrlImage { get; set; }
     public override Dictionary<string, object?> ToMap()
     {
         return new Dictionary<string, object?>
@@ -40,6 +43,7 @@ public class CartItem : BaseModel
             { "quantity", Quantity },
             { "unitPrice", UnitPrice },
             { "name", Name },
+            { "url", UrlImage },
         };
     }
 

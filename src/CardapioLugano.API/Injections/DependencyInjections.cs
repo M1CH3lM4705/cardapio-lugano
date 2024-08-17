@@ -101,10 +101,23 @@ public static class DependencyInjections
             return new DAL<Image>(Image.Images, appwriteService, userService, options);
         });
 
+        services.AddTransient<IDal<Customer>>(sp =>
+        {
+            var appwriteService = sp.GetRequiredService<IAppwriteBase>();
+
+            var userService = sp.GetRequiredService<AuthenticatedUser>();
+
+            var options = sp.GetRequiredService<IOptions<AppwriteConfiguration>>();
+
+            return new DAL<Customer>(Customer.Customers, appwriteService, userService, options);
+        });
+
         services.AddTransient<ICartServices, CartServices>();
 
         services.AddTransient<IProductService, ProductService>();
         
         services.AddTransient<ITokenGenerator, TokenGenerator>();
+
+        services.AddTransient<ICustomerService, CustomerService>();
     }
 }

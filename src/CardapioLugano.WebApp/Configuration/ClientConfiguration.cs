@@ -11,7 +11,7 @@ public static class ClientConfiguration
             WebConfiguration.ClientName,
             opt =>
             {
-                opt.BaseAddress = new Uri(WebConfiguration.BackendUrl);
+                opt.BaseAddress = new Uri(WebConfiguration.BackendUrl ?? "http://localhost:7290");
             })
             .AddHttpMessageHandler<HttpHandler>();
     }

@@ -34,8 +34,9 @@ public class CardComponent : ComponentBase
 
     protected async Task AddItemCart(string id)
     {
+        var image = Product.Images.First().ImageString;
         IsBusy = true;
-        var request = new CartItemRequest(string.Empty, Product.Id, (int)Product.StockQuantity, Product.Price, Product.Name, id);
+        var request = new CartItemRequest(string.Empty, Product.Id, (int)Product.StockQuantity, Product.Price, Product.Name, id, image);
 
         await CartService.AddItemCartAsync(request);
 

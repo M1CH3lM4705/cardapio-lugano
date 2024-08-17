@@ -6,10 +6,12 @@
 
 <MudLayout>    
     <MudAppBar Color="Color.Primary">
-        <MudNavLink Href="/" Icon="@Icons.Material.Filled.ArrowBackIos"></MudNavLink>
+        <MudNavMenu>
+            <MudNavLink Href="/" Icon="@Icons.Material.Filled.ArrowBackIos"></MudNavLink>
+        </MudNavMenu>
     </MudAppBar>
-    <MudMainContent>
-        <MudContainer MaxWidth="MaxWidth.Medium">
+    <MudMainContent Class="flex flex-col min-h-screen">
+        <MudContainer Class="">
             @Body
         </MudContainer>
     </MudMainContent>

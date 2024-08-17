@@ -43,7 +43,7 @@ public class FooterComponent : ComponentBase, IDisposable
             {
 
                 var result = await CartService.GetCartByIdAsync(id);
-                CountCart = result!.TotalItems;
+                CountCart = result!.Data!.TotalItems;
                 StateHasChanged();
             });
 

@@ -12,7 +12,7 @@ namespace CardapioLugano.WebApp.Services;
 
 public class AuthService(IHttpClientFactory httpClientFactory, ILocalStorageService localStorage) : AuthenticationStateProvider
 {
-    private bool autenticado = false;
+    
     private readonly HttpClient _client = httpClientFactory.CreateClient(WebConfiguration.ClientName);
 
     public override async Task<AuthenticationState> GetAuthenticationStateAsync()
