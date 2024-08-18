@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CardapioLugano.Data\CardapioLugano.Data.csproj" />
+    <ProjectReference Include="..\CardapioLugano.Shared\CardapioLugano.Shared.csproj" />
   </ItemGroup>
 
 </Project>

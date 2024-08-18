@@ -1,4 +1,4 @@
-﻿using CardapioLugano.API.Responses;
+﻿using CardapioLugano.Shared.Responses;
 
 namespace CardapioLugano.API.Services.Interfaces;
 

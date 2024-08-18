@@ -3,8 +3,8 @@ using CardapioLugano.API.Extensions;
 using CardapioLugano.Data.Persistence.Interfaces;
 using CardapioLugano.Modelos.Models;
 using Microsoft.AspNetCore.Mvc;
-using CardapioLugano.API.Responses;
-using CardapioLugano.API.Requests;
+using CardapioLugano.Shared.Responses;
+using CardapioLugano.Shared.Requests;
 
 namespace CardapioLugano.API.Endpoints;
 

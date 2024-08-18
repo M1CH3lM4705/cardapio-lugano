@@ -1,5 +1,5 @@
-﻿using CardapioLugano.API.Responses;
-using CardapioLugano.API.Requests;
+﻿using CardapioLugano.Shared.Responses;
+using CardapioLugano.Shared.Requests;
 
 namespace CardapioLugano.API.Services.Interfaces;
 

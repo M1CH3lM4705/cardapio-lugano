@@ -1,5 +1,5 @@
-﻿using CardapioLugano.WebApp.Requests;
-using CardapioLugano.WebApp.Responses;
+﻿using CardapioLugano.Shared.Requests;
+using CardapioLugano.Shared.Responses;
 using CardapioLugano.WebApp.Services;
 using CardapioLugano.WebApp.Services.Interfaces;
 using Microsoft.AspNetCore.Components;

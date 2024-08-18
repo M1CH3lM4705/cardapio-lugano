@@ -1,4 +1,4 @@
-﻿using CardapioLugano.API.Requests;
+﻿using CardapioLugano.Shared.Requests;
 using CardapioLugano.API.Services.Interfaces;
 using CardapioLugano.Data.Persistence.Interfaces;
 using CardapioLugano.Modelos.Models;

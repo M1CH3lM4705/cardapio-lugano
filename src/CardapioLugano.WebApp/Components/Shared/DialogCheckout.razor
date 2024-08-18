@@ -1,0 +1,27 @@
+﻿@inherits DialogCheckoutComponent
+
+<MudDrawer @bind-Open="@OpenDrawer" Width="400" Height="100%" Elevation="1" Variant="@DrawerVariant.Temporary" Anchor="Anchor.End">
+    <MudDrawerHeader></MudDrawerHeader>
+    
+        <MudTabs>
+            <MudTabPanel Text="Checkout">
+                <div class="d-flex justify-center">
+                    <MudButton Variant="@Variant.Filled" Color="Color.Primary" OnClick="() => Activate(Delivery!)">Entrega</MudButton>
+                    <MudButton Variant="@Variant.Filled" Color="Color.Primary" OnClick="() => Activate(PickUpInStore!)" Class="mx-2">Retirar na loja</MudButton>
+                </div>
+                <MudDivider DividerType="DividerType.Middle" Class="my-6" />
+                <MudTabs Elevation="1" Rounded="true" @ref="Tabs">
+                    <MudTabPanel @ref="Delivery">
+                        <MudText>Entrega</MudText>
+                    </MudTabPanel>
+                    <MudTabPanel @ref="PickUpInStore">
+                        <MudText>Retirada</MudText>
+                    </MudTabPanel>
+                </MudTabs>
+            </MudTabPanel>
+            <MudTabPanel Text="Pagamento">
+                <MudText>Pagamento</MudText>
+            </MudTabPanel>
+        </MudTabs>
+    
+</MudDrawer>

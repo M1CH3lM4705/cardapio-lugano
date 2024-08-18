@@ -1,6 +1,6 @@
-﻿using System.Text.Json.Serialization;
+﻿using Newtonsoft.Json;
 
-namespace CardapioLugano.WebApp.Responses;
+namespace CardapioLugano.Shared.Responses;
 
 public class PagedResponse<TData> : Response<TData>
 {
@@ -24,6 +24,10 @@ public class PagedResponse<TData> : Response<TData>
     {
     }
 
+    public PagedResponse()
+    {
+        
+    }
     public int CurrentPage { get; set; }
     public int TotalPages => (int)Math.Ceiling(TotalCount / (double)PageSize);
     public int PageSize { get; set; } = 25;

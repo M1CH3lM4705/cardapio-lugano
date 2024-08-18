@@ -1,4 +1,4 @@
-﻿using CardapioLugano.WebApp.Responses;
+﻿using CardapioLugano.Shared.Responses;
 using Microsoft.AspNetCore.Components;
 
 namespace CardapioLugano.WebApp.Components.Catalogo;

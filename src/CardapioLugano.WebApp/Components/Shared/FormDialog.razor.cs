@@ -1,5 +1,5 @@
-﻿using CardapioLugano.WebApp.Requests;
-using CardapioLugano.WebApp.Responses;
+﻿using CardapioLugano.Shared.Requests;
+using CardapioLugano.Shared.Responses;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 

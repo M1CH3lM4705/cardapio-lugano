@@ -1,6 +1,6 @@
 ﻿using CardapioLugano.Modelos.Models;
 
-namespace CardapioLugano.API.Responses;
+namespace CardapioLugano.Shared.Responses;
 
 public record OrderResponse(string? CustomeId, string? TotalAmount, string? Status)
 {

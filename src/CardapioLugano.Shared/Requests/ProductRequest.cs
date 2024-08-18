@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace CardapioLugano.API.Requests;
+namespace CardapioLugano.Shared.Requests;
 
 public record ProductRequest(
     string? Id,

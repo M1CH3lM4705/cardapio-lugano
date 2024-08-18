@@ -1,6 +1,6 @@
 ﻿using CardapioLugano.WebApp.Configuration;
-using CardapioLugano.WebApp.Requests;
-using CardapioLugano.WebApp.Responses;
+using CardapioLugano.Shared.Requests;
+using CardapioLugano.Shared.Responses;
 using System.Net.Http.Json;
 
 namespace CardapioLugano.WebApp.Services;

@@ -19,6 +19,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{779020A4-CB1
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CardapioLugano.WebApp", "CardapioLugano.WebApp\CardapioLugano.WebApp.csproj", "{DFCB2E41-D6A4-4E91-A9C5-B273AFF65306}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{C6AA75B0-3C9E-4163-8651-E410E65AF0B6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CardapioLugano.Shared", "CardapioLugano.Shared\CardapioLugano.Shared.csproj", "{3839C3A9-8923-4088-B6EE-0EA1148E9CCF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +45,10 @@ Global
 		{DFCB2E41-D6A4-4E91-A9C5-B273AFF65306}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DFCB2E41-D6A4-4E91-A9C5-B273AFF65306}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DFCB2E41-D6A4-4E91-A9C5-B273AFF65306}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3839C3A9-8923-4088-B6EE-0EA1148E9CCF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3839C3A9-8923-4088-B6EE-0EA1148E9CCF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3839C3A9-8923-4088-B6EE-0EA1148E9CCF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3839C3A9-8923-4088-B6EE-0EA1148E9CCF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -50,6 +58,7 @@ Global
 		{402BEA3B-784D-4600-A22D-E6AD8EBD579E} = {D04BCB18-AA06-4AD2-9CEE-8690AE29BC29}
 		{18F9B652-55D4-49A7-B86E-517617D4F23C} = {2C039584-D24A-41F8-9F72-A096600A1559}
 		{DFCB2E41-D6A4-4E91-A9C5-B273AFF65306} = {779020A4-CB12-47D1-B43C-3D58E13E7834}
+		{3839C3A9-8923-4088-B6EE-0EA1148E9CCF} = {C6AA75B0-3C9E-4163-8651-E410E65AF0B6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D52CAA5D-A2F5-4C35-B8A6-5308E069A871}

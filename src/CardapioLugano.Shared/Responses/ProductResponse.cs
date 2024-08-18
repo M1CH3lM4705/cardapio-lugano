@@ -1,15 +1,15 @@
 ﻿using CardapioLugano.Modelos.Models;
 
-namespace CardapioLugano.API.Responses;
+namespace CardapioLugano.Shared.Responses;
 
 public record ProductResponse(
-    string? Id, 
-    string? Name, 
-    string? Description, 
+    string? Id,
+    string? Name,
+    string? Description,
     double Price,
     long StockQuantity,
-    bool Active, 
-    CategoryResponse Category, 
+    bool Active,
+    CategoryResponse Category,
     List<ImageResponse?> Images)
 {
     public static implicit operator ProductResponse(Product product)

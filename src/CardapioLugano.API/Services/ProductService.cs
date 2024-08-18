@@ -1,7 +1,7 @@
 ﻿using Appwrite;
 using CardapioLugano.API.Extensions;
-using CardapioLugano.API.Requests;
-using CardapioLugano.API.Responses;
+using CardapioLugano.Shared.Requests;
+using CardapioLugano.Shared.Responses;
 using CardapioLugano.API.Services.Interfaces;
 using CardapioLugano.API.Utils;
 using CardapioLugano.Data.Configurations;

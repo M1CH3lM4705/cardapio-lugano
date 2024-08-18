@@ -1,5 +1,5 @@
 ﻿using Appwrite.Models;
-using CardapioLugano.API.Responses;
+using CardapioLugano.Shared.Responses;
 using CardapioLugano.Modelos.Models;
 
 namespace CardapioLugano.API.Extensions;

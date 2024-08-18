@@ -1,5 +1,5 @@
 ﻿using CardapioLugano.API.Common;
-using CardapioLugano.API.Requests;
+using CardapioLugano.Shared.Requests;
 using CardapioLugano.API.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 

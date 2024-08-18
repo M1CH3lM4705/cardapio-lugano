@@ -1,7 +1,7 @@
 ﻿using Appwrite;
 using CardapioLugano.API.Extensions;
-using CardapioLugano.API.Requests;
-using CardapioLugano.API.Responses;
+using CardapioLugano.Shared.Requests;
+using CardapioLugano.Shared.Responses;
 using CardapioLugano.Data.Persistence.Interfaces;
 using CardapioLugano.Modelos.Models;
 using Microsoft.AspNetCore.Mvc;

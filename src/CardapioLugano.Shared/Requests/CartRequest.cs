@@ -1,3 +1,3 @@
-﻿namespace CardapioLugano.API.Requests;
+﻿namespace CardapioLugano.Shared.Requests;
 
 public record CartRequest(string? CustomerId);

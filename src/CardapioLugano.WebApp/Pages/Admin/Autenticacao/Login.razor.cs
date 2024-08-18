@@ -1,4 +1,4 @@
-﻿using CardapioLugano.WebApp.Requests;
+﻿using CardapioLugano.Shared.Requests;
 using CardapioLugano.WebApp.Services;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;

@@ -1,5 +1,5 @@
-﻿using CardapioLugano.API.Requests;
-using CardapioLugano.API.Responses;
+﻿using CardapioLugano.Shared.Requests;
+using CardapioLugano.Shared.Responses;
 using CardapioLugano.Data.Persistence.Interfaces;
 using CardapioLugano.Data.Token;
 using CardapioLugano.Modelos.Models;

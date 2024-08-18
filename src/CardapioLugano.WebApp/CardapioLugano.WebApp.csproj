@@ -35,4 +35,14 @@
   <ItemGroup>
     <_ContentIncludedByDefault Remove="Components\CartItem\CardCart.razor" />
   </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\CardapioLugano.Shared\CardapioLugano.Shared.csproj" />
+  </ItemGroup>
+
+	<Target Name="AllowUsingAspNetCoreInBlazorWasm" AfterTargets="ProcessFrameworkReferences" >
+		<ItemGroup>
+			<UnavailableRuntimePack Remove="Microsoft.AspNetCore.App" />
+		</ItemGroup>
+	</Target>
 </Project>

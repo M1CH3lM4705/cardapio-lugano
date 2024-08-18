@@ -1,6 +1,6 @@
 ﻿using Appwrite;
-using CardapioLugano.API.Requests;
-using CardapioLugano.API.Responses;
+using CardapioLugano.Shared.Requests;
+using CardapioLugano.Shared.Responses;
 
 namespace CardapioLugano.API.Services.Interfaces;
 

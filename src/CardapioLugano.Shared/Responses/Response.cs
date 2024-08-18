@@ -1,6 +1,6 @@
-﻿using System.Text.Json.Serialization;
+﻿using Newtonsoft.Json;
 
-namespace CardapioLugano.WebApp.Responses;
+namespace CardapioLugano.Shared.Responses;
 
 public class Response<TData>
 {
