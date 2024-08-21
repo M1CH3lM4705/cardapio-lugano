@@ -17,7 +17,6 @@ public class CartPage : ComponentBase
 
     protected bool IsBusy { get; set; } = false;
 
-    protected bool OpenDrawer { get; set; } = false;
     #endregion
 
     #region Services
@@ -91,7 +90,8 @@ public class CartPage : ComponentBase
         Cart.UpdateCart();
     }
 
-    protected void ShowDrawer() => OpenDrawer = !OpenDrawer;
+    protected async void ShowDrawer() => 
+        await _dialogService.ShowAsync<DialogCheckout>(null, new DialogOptions { MaxWidth = MaxWidth.Medium, FullWidth = true });
 
     #endregion
 }

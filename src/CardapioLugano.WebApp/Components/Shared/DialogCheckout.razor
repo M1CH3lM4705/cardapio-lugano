@@ -1,21 +1,51 @@
 ﻿@inherits DialogCheckoutComponent
 
-<MudDrawer @bind-Open="@OpenDrawer" Width="400" Height="100%" Elevation="1" Variant="@DrawerVariant.Temporary" Anchor="Anchor.End">
-    <MudDrawerHeader></MudDrawerHeader>
-    
+<MudDialog>
+    <DialogContent>
+
         <MudTabs>
             <MudTabPanel Text="Checkout">
-                <div class="d-flex justify-center">
+                <div class="d-flex justify-start mt-8">
                     <MudButton Variant="@Variant.Filled" Color="Color.Primary" OnClick="() => Activate(Delivery!)">Entrega</MudButton>
                     <MudButton Variant="@Variant.Filled" Color="Color.Primary" OnClick="() => Activate(PickUpInStore!)" Class="mx-2">Retirar na loja</MudButton>
                 </div>
                 <MudDivider DividerType="DividerType.Middle" Class="my-6" />
                 <MudTabs Elevation="1" Rounded="true" @ref="Tabs">
                     <MudTabPanel @ref="Delivery">
-                        <MudText>Entrega</MudText>
+
+                        <MudPaper Class="pa-16 ma-2" Outlined="true">
+                            <MudText>Dados do cliente</MudText>
+                            <MudTextField @bind-Value="firstName" T="string" Label="Nome" Required="true" RequiredError="Nome é obrigatorio" />
+                            <MudTextField @bind-Value="phone" T="string" Label="Telefone" Required="true" RequiredError="Telefone é obrigatorio" />
+                        </MudPaper>
+
+                        <MudPaper Class="pa-16 ma-2" Outlined="true">
+                            <MudText>Informação de entrega</MudText>
+                            <MudTextField T="string" Label="Nome da rua"
+                                          
+                                          Required="true"
+                                          RequiredError="O nome da rua é obrigatorio" />
+                            <MudTextField T="string"
+                                          Label="Casa, apartamento etc." />
+
+                            <MudNumericField T="int" @bind-Value="number"
+                                          Label="Numero"
+                                          Variant="Variant.Text" Min="2" Max="4" />
+
+                            <MudSelect T="string" @bind-Value="bairro"
+                                       Label="Bairro" Required="true" RequiredError="Selecione o bairro." AnchorOrigin="Origin.BottomCenter" Variant="Variant.Outlined" Clearable>
+                                       <MudSelectItem Value="@("Teste")" />
+                            </MudSelect>
+                            
+                        </MudPaper>
+
                     </MudTabPanel>
                     <MudTabPanel @ref="PickUpInStore">
-                        <MudText>Retirada</MudText>
+                        <MudPaper Class="pa-16 ma-2" Outlined="true">
+                            <MudText>Dados do cliente</MudText>
+                            <MudTextField @bind-Value="firstName" T="string" Label="Nome" Required="true" RequiredError="Nome é obrigatorio" />
+                            <MudTextField @bind-Value="phone" T="string" Label="Telefone" Required="true" RequiredError="Telefone é obrigatorio" />
+                        </MudPaper>
                     </MudTabPanel>
                 </MudTabs>
             </MudTabPanel>
@@ -23,5 +53,5 @@
                 <MudText>Pagamento</MudText>
             </MudTabPanel>
         </MudTabs>
-    
-</MudDrawer>
+    </DialogContent>
+</MudDialog>

@@ -11,15 +11,15 @@
         </MudNavMenu>
     </MudAppBar>
     <MudMainContent Class="flex flex-col min-h-screen">
-        <MudContainer Class="">
+        
             @Body
-        </MudContainer>
+        
     </MudMainContent>
 </MudLayout>
 
 @code {
     private MudTheme currentTheme = new MudTheme()
         {
-            PaletteDark = LuganoPallete.CreatePallete
+            PaletteLight = LuganoPallete.CreatePallete
         };
 }

@@ -3,7 +3,7 @@ using MudBlazor.Utilities;
 
 namespace CardapioLugano.WebApp.Layout;
 
-public class LuganoPallete : PaletteDark
+public class LuganoPallete : PaletteLight
 {
     private LuganoPallete()
     {

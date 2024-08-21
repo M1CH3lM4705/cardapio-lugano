@@ -790,6 +790,10 @@ video {
   align-items: center;
 }
 
+.justify-start {
+  justify-content: flex-start;
+}
+
 .justify-end {
   justify-content: flex-end;
 }
@@ -846,11 +850,6 @@ video {
 
 .border {
   border-width: 1px;
-}
-
-.bg-\[\#18181b\] {
-  --tw-bg-opacity: 1;
-  background-color: rgb(24 24 27 / var(--tw-bg-opacity));
 }
 
 .bg-blue-500 {
