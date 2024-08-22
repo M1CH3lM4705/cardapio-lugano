@@ -55,10 +55,10 @@ public class HomePage : ComponentBase
             if (result.IsSuccess)
                 Products = result.Data ?? [];
         }
-        catch (Exception ex)
+        catch
         {
 
-            Snackbar.Add(ex.Message, Severity.Error);
+            Snackbar.Add("Ocorreu um erro ao obter o menu. Tente novamente mais tarde...", Severity.Error);
         }
         finally
         {

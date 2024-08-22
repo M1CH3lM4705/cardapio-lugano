@@ -1,4 +1,5 @@
 ﻿using CardapioLugano.API.Services;
+using CardapioLugano.API.Services.APIs;
 using CardapioLugano.API.Services.Interfaces;
 using CardapioLugano.Data.Configurations;
 using CardapioLugano.Data.Persistence;
@@ -119,5 +120,10 @@ public static class DependencyInjections
         services.AddTransient<ITokenGenerator, TokenGenerator>();
 
         services.AddTransient<ICustomerService, CustomerService>();
+
+        services.AddHttpClient<INeighborhoodService, NeighborhoodService>(client =>
+        {
+            client.BaseAddress = new Uri(config["NeighborhoodUrl"]!);
+        });
     }
 }

@@ -29,6 +29,7 @@ builder.Services.AddTransient<ProductService>();
 builder.Services.AddTransient<CategoryService>();
 builder.Services.AddTransient<CartService>();
 builder.Services.AddSingleton<CartState>();
+builder.Services.AddTransient<NeighborhoodService>();
 
 builder.Services.AddHttpClients();
 

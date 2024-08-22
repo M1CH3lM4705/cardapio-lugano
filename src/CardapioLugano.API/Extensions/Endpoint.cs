@@ -2,6 +2,7 @@
 using CardapioLugano.API.Endpoints;
 using CardapioLugano.API.Endpoints.Carts;
 using CardapioLugano.API.Endpoints.Customers;
+using CardapioLugano.API.Endpoints.Neighborhood;
 using CardapioLugano.Modelos.Models;
 
 namespace CardapioLugano.API.Extensions;
@@ -28,6 +29,11 @@ public static class Endpoint
             .MapEndpoint<CreateCartItemEndopoint>()
             .MapEndpoint<PutCartEndpoint>()
             .MapEndpoint<DeleteCartItemEndpoint>();
+
+        endpoints.MapGroup("/neighborhood")
+            .WithTags("Neighborhoods")
+            .AllowAnonymous()
+            .MapEndpoint<GetNeighborhood>();
     }
 
     private static IEndpointRouteBuilder MapEndpoint<T>(this IEndpointRouteBuilder app) where T : IEndpoint

@@ -1,4 +1,5 @@
-﻿@inherits DialogCheckoutComponent
+﻿@using CardapioLugano.Modelos.Models
+@inherits DialogCheckoutComponent
 
 <MudDialog>
     <DialogContent>
@@ -32,9 +33,21 @@
                                           Label="Numero"
                                           Variant="Variant.Text" Min="2" Max="4" />
 
-                            <MudSelect T="string" @bind-Value="bairro"
-                                       Label="Bairro" Required="true" RequiredError="Selecione o bairro." AnchorOrigin="Origin.BottomCenter" Variant="Variant.Outlined" Clearable>
-                                       <MudSelectItem Value="@("Teste")" />
+                            <MudSelect T="Neighborhood"
+                                       Label="Bairro" Required="true"
+                                       RequiredError="Selecione o bairro." 
+                                       AnchorOrigin="Origin.BottomCenter" 
+                                       Variant="Variant.Outlined" 
+                                       ToStringFunc="@Converter"
+                                       ValueChanged="NeighborhoodSelect"
+                                       Clearable>
+                                @if(Neighborhoods is not null)
+                                {
+                                    @foreach(var neighborhood in Neighborhoods)
+                                    {
+                                        <MudSelectItem Value="neighborhood" />
+                                    }
+                                }
                             </MudSelect>
                             
                         </MudPaper>
@@ -49,9 +62,12 @@
                     </MudTabPanel>
                 </MudTabs>
             </MudTabPanel>
-            <MudTabPanel Text="Pagamento">
+            <MudTabPanel Text="Pagamento" Disabled="true">
                 <MudText>Pagamento</MudText>
             </MudTabPanel>
         </MudTabs>
+        <DialogActions>
+            <MudButton Variant="Variant.Filled" FullWidth="true">Proximo</MudButton>
+        </DialogActions>
     </DialogContent>
 </MudDialog>

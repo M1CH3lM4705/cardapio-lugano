@@ -1,4 +1,5 @@
-﻿using CardapioLugano.Shared.Requests;
+﻿using CardapioLugano.Modelos.Models;
+using CardapioLugano.Shared.Requests;
 using CardapioLugano.Shared.Responses;
 using CardapioLugano.WebApp.Components.Shared;
 using CardapioLugano.WebApp.Services;
@@ -14,7 +15,7 @@ public class CartPage : ComponentBase
     public string Id { get; set; } = string.Empty;
 
     protected CartResponse? Cart { get; set; } = null;
-
+    protected ICollection<Neighborhood> Neighborhoods { get; set; } = null!;
     protected bool IsBusy { get; set; } = false;
 
     #endregion
@@ -26,7 +27,7 @@ public class CartPage : ComponentBase
 
     [Inject]
     private IDialogService _dialogService { get; set; } = null!;
-
+    [Inject] NeighborhoodService NeighborhoodService { get; set; } = null!;
     #endregion
 
     #region Methods
@@ -34,6 +35,10 @@ public class CartPage : ComponentBase
     protected override async Task OnInitializedAsync()
     {
         IsBusy = true;
+
+        var response = await NeighborhoodService.GetNeighborhood();
+
+        Neighborhoods = response.Data!;
 
         var result = await CartService.GetCartByIdAsync(Id);
 
@@ -90,8 +95,11 @@ public class CartPage : ComponentBase
         Cart.UpdateCart();
     }
 
-    protected async void ShowDrawer() => 
-        await _dialogService.ShowAsync<DialogCheckout>(null, new DialogOptions { MaxWidth = MaxWidth.Medium, FullWidth = true });
+    protected async void ShowDrawer(ICollection<Neighborhood> neighborhoods)
+    {
+        var dialogParameters = new DialogParameters<DialogCheckout> { { x => x.Neighborhoods, neighborhoods } };
+        await _dialogService.ShowAsync<DialogCheckout>(null, dialogParameters, new DialogOptions { MaxWidth = MaxWidth.Medium, FullWidth = true });
+    }
 
     #endregion
 }
